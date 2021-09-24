@@ -1,0 +1,27 @@
+@import "../../styles";
+.card-crypto {
+    .card-body {
+        min-width: 300px;
+        min-height: 850px;
+    }
+    max-width: 500px;
+    transition: border-left-color 0.2s ease-in-out, background-color 0.3s linear,
+        border-right-color 0.2s ease-in-out;
+
+    &:hover {
+        cursor: pointer;
+        border-color: rgba($primary, 05);
+        .card-body {
+            background-color: rgba($primary, 0.02);
+        }
+    }
+
+    .table th,
+    .table td {
+        padding: 0.6rem;
+    }
+
+    .app-button-refresh {
+        border-color: rgba($primary, 0.1);
+    }
+}

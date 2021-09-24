@@ -1,1 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
+
+$primary: #3f51b5;
+
+$card-cap-bg: #3f51b5;
+$card-cap-color: white;
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+@media (min-width: 1200px) {
+    .container-xl,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 1500px !important;
+    }
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgb($primary, 0.05);
+}
+
+.app-crypto-icon {
+    img {
+        width: 100%;
+        height: auto;
+        max-width: 24px;
+    }
+}
+
+.app-crypto-icon-box {
+    width: 50px;
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.app-dialog {
+    .modal-header {
+        border-bottom: 0 !important;
+        padding: 1rem 2rem !important;
+    }
+
+    .modal-body {
+        padding: 0.5rem 2rem !important;
+    }
+
+    .modal-footer {
+        border-top: 0 !important;
+        padding: 1rem 2rem !important;
+    }
+}

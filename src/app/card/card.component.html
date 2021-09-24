@@ -1,0 +1,161 @@
+<div
+    class="card card-crypto mb-4 rounded-3 shadow-sm mr-4"
+    *ngIf="card"
+    (click)="open()"
+>
+    <div class="card-header py-3 d-flex justify-content-between">
+        <div class="d-flex">
+            <h4 class="my-0 fw-normal mr-2">
+                {{ card.address | slice: 0:4 }}...{{ card.address | slice: -4 }}
+            </h4>
+            <div class="app-crypto-icon mr-2">
+                <img
+                    src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@master/svg/white/{{
+                        card.icon
+                    }}.svg"
+                    alt="btc"
+                />
+            </div>
+        </div>
+        <div>
+            <h4 class="my-0 fw-normal">
+                <i class="bi-plus-lg"></i>
+            </h4>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="d-flex justify-content-between mb-3">
+            <div class="app-crypto-icon-box">
+                <img
+                    src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@master/svg/icon/{{
+                        card.icon
+                    }}.svg"
+                    alt="btc"
+                />
+            </div>
+            <div>
+                <button
+                    class="
+                        btn btn-outline-primary
+                        rounded-circle
+                        app-button-refresh
+                    "
+                    type="button"
+                    (click)="refresh($event)"
+                >
+                    <i class="bi-arrow-clockwise"></i>
+                </button>
+            </div>
+        </div>
+
+        <ul class="list-unstyled mb-4">
+            <li class="d-flex justify-content-between">
+                <div>Last transaction cost</div>
+                <div>{{ card.total1 | currency }}</div>
+            </li>
+            <li class="d-flex justify-content-between">
+                <div>Last 5 transactions cost</div>
+                <div>{{ card.total5 | currency }}</div>
+            </li>
+            <li class="d-flex justify-content-between mb-3">
+                <div>Last 10 transactions cost</div>
+                <div>{{ card.total10 | currency }}</div>
+            </li>
+            <li class="d-flex justify-content-between">
+                <div>Highest transaction(s) cost</div>
+                <div>$28.00</div>
+            </li>
+            <li class="d-flex justify-content-between mb-2">
+                <div>Lowest transaction(s) cost</div>
+                <div>$1.00</div>
+            </li>
+        </ul>
+
+        <div style="min-height: 500px">
+            <table class="table" [class.table-striped]="!loading">
+                <thead>
+                    <tr>
+                        <th>Txn</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Fee</th>
+                        <th class="text-center">Est. Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="loading">
+                        <td colspan="4" class="text-center">
+                            <div
+                                class="spinner-border text-secondary mt-4"
+                                role="status"
+                            >
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!loading && message">
+                        <td colspan="4" class="text-center">
+                            {{ message }}
+                        </td>
+                    </tr>
+                    <ng-container *ngIf="!loading">
+                        <tr
+                            *ngFor="
+                                let transaction of card.transactions
+                                    | slice: 0:10
+                            "
+                        >
+                            <td>
+                                {{ transaction.id | slice: 0:2 }}...{{
+                                    transaction.id | slice: -2
+                                }}
+                            </td>
+                            <td class="text-center">
+                                {{ transaction.date | ago }}
+                            </td>
+                            <td
+                                class="text-center"
+                                title="{{ transaction.fee }}"
+                            >
+                                {{ transaction.fee | number: "1.6-6" }}
+                            </td>
+                            <td class="text-center">
+                                {{
+                                    transaction.feeValue
+                                        | currency: "USD":"symbol":"1.2-4"
+                                }}
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a
+                        class="page-link"
+                        href="#"
+                        tabindex="-1"
+                        aria-disabled="true"
+                        >Previous</a
+                    >
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">...</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+
+        <button type="button" class="w-100 btn btn-lg btn-outline-primary">
+            Load more
+        </button>
+    </div>
+</div>
+
+<app-card-modal
+    [openCard]="openCard"
+    (removeCard)="removeCard()"
+    (select)="refreshCard($event)"
+></app-card-modal>

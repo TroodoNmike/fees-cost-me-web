@@ -1,0 +1,25 @@
+<div class="card card-crypto mb-4 rounded-3 shadow-sm mr-4" (click)="open()">
+    <div class="card-header py-3 d-flex justify-content-between">
+        <div class="d-flex">
+            <h4 class="mb-0">Connect Wallet</h4>
+        </div>
+        <div>
+            <h4 class="my-0 fw-normal">
+                <i class="bi-plus-lg"></i>
+            </h4>
+        </div>
+    </div>
+    <div class="card-body d-flex justify-content-center">
+        <div class="mt-5">
+            <button type="button" class="btn btn-lg btn-outline-primary">
+                <i class="bi-plus bi-plus-lg mr-1"></i>
+                Connect Wallet
+            </button>
+        </div>
+    </div>
+</div>
+
+<app-card-modal
+    [openCard]="openCard"
+    (select)="refreshCard($event)"
+></app-card-modal>
