@@ -3,7 +3,13 @@
         <div class="col-12 d-flex mb-3">
             <button
                 type="button"
-                class="btn btn-lg btn-outline-primary rounded-pill mr-2"
+                class="
+                    btn btn-lg btn-outline-primary
+                    rounded-pill
+                    app-profile-button
+                    mr-2
+                "
+                [class.hello]="selectedProfile.name == profile.name"
                 *ngFor="let profile of profiles; index as i"
                 (click)="selectProfile(profile)"
             >
