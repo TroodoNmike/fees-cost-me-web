@@ -22,7 +22,6 @@ export class AgoPipe implements PipeTransform {
                 roundingMethod: 'floor',
             });
 
-            console.log(hours);
             if (hours <= 1) {
                 return formatDistanceToNowStrict(convertedToDate, {
                     unit: 'minute',

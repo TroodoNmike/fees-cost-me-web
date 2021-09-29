@@ -3,8 +3,8 @@
         <h4 class="modal-title" id="modal-basic-title">Connect wallet</h4>
     </div>
     <div class="modal-body">
-        <form>
-            <input type="text" style="display: none" />
+        <form autocomplete="off">
+            <!--            <input type="text" style="display: none" />-->
             <div class="mb-2">
                 <span class="app-crypto-icon mr-1">
                     <img
@@ -74,6 +74,7 @@
                     [(ngModel)]="address"
                     [ngModelOptions]="{ standalone: true }"
                     (ngModelChange)="blockchain = 'solana'"
+                    ngbAutofocus
                 />
 
                 <button
