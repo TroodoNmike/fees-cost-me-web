@@ -59,6 +59,8 @@ export class CardModalComponent implements OnInit {
             total1: 0,
             total5: 0,
             total10: 0,
+            highest: 0,
+            lowest: 0,
         };
         this.select.emit(this.card);
 

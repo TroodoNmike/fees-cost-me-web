@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
-import { CardInterface } from '../interfaces/card.interface';
+import {
+    CardInterface,
+    TransactionInterface,
+} from '../interfaces/card.interface';
 import { catchError, delay, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { AddressService } from '../address.service';
+import { AddressService } from '../services/address.service';
 
 @Component({
     selector: 'app-card',
@@ -52,5 +55,10 @@ export class CardComponent implements OnInit {
         this.addressService.getTransactionsForCard(card).subscribe((card) => {
             this.card = card;
         });
+    }
+
+    openTransaction($event: MouseEvent, transaction: TransactionInterface) {
+        window.open('https://google.com', '_blank');
+        $event.stopPropagation();
     }
 }

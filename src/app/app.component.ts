@@ -20,6 +20,8 @@ export class AppComponent {
                     total1: 0,
                     total5: 0,
                     total10: 0,
+                    highest: 0,
+                    lowest: 0,
                 },
                 {
                     address: '0xe055248df087faba7758055cbdf6aa9acf246627',
@@ -29,6 +31,8 @@ export class AppComponent {
                     total1: 0,
                     total5: 0,
                     total10: 0,
+                    highest: 0,
+                    lowest: 0,
                 },
                 // {
                 //     address: '14Fyz7dpFrJnibbq2296vihzdFBgrsikxE4kERKKk3HG',
@@ -47,6 +51,8 @@ export class AppComponent {
                     total1: 0,
                     total5: 0,
                     total10: 0,
+                    highest: 0,
+                    lowest: 0,
                 },
             ],
         },

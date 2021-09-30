@@ -49,25 +49,53 @@
         </div>
 
         <ul class="list-unstyled mb-4">
+            <!--            <li class="d-flex justify-content-between">-->
+            <!--                <div>Last transaction cost</div>-->
+            <!--                <div>{{ card.total1 | currency }}</div>-->
+            <!--            </li>-->
             <li class="d-flex justify-content-between">
-                <div>Last transaction cost</div>
-                <div>{{ card.total1 | currency }}</div>
-            </li>
-            <li class="d-flex justify-content-between">
-                <div>Last 5 transactions cost</div>
+                <div>Total cost for last 5 transactions</div>
                 <div>{{ card.total5 | currency }}</div>
             </li>
             <li class="d-flex justify-content-between mb-3">
-                <div>Last 10 transactions cost</div>
+                <div>Total cost for last 10 transactions</div>
                 <div>{{ card.total10 | currency }}</div>
             </li>
+            <li class="d-flex justify-content-between mb-3">
+                <div>
+                    Potential savings
+                    <i
+                        class="bi bi-info-circle"
+                        ngbTooltip="Based on recent transactions when switching to Solana network"
+                    ></i>
+                </div>
+                <div class="font-weight-bold text-success">
+                    {{ card.total10 | currency }}
+                </div>
+            </li>
             <li class="d-flex justify-content-between">
-                <div>Highest transaction(s) cost</div>
-                <div>$28.00</div>
+                <div>
+                    Highest transaction(s) cost
+                    <i
+                        class="bi bi-info-circle"
+                        ngbTooltip="Based on recent transactions"
+                    ></i>
+                </div>
+                <div [class.text-danger]="card.highest > 1">
+                    {{ card.highest | currency }}
+                </div>
             </li>
             <li class="d-flex justify-content-between mb-2">
-                <div>Lowest transaction(s) cost</div>
-                <div>$1.00</div>
+                <div>
+                    Lowest transaction(s) cost
+                    <i
+                        class="bi bi-info-circle"
+                        ngbTooltip="Based on recent transactions"
+                    ></i>
+                </div>
+                <div ngbTooltip="Based on recent transactions not all">
+                    {{ card.lowest | currency }}
+                </div>
             </li>
         </ul>
 
@@ -104,10 +132,12 @@
                                     | slice: 0:10
                             "
                         >
-                            <td>
-                                {{ transaction.id | slice: 0:2 }}...{{
-                                    transaction.id | slice: -2
-                                }}
+                            <td
+                                class="text-center"
+                                (click)="openTransaction($event, transaction)"
+                                [title]="transaction.id"
+                            >
+                                <i class="bi bi-arrow-up-right-square"></i>
                             </td>
                             <td class="text-center">
                                 {{ transaction.date | ago }}
