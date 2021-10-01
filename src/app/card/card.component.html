@@ -5,8 +5,11 @@
 >
     <div class="card-header py-3 d-flex justify-content-between">
         <div class="d-flex">
-            <h4 class="my-0 fw-normal mr-2">
+            <h4 class="my-0 fw-normal mr-2" *ngIf="!card.name">
                 {{ card.address | slice: 0:4 }}...{{ card.address | slice: -4 }}
+            </h4>
+            <h4 class="my-0 fw-normal mr-2" *ngIf="card.name">
+                {{ card.name }}
             </h4>
             <div class="app-crypto-icon mr-2">
                 <img
@@ -24,7 +27,7 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex justify-content-between">
             <div class="app-crypto-icon-box">
                 <img
                     src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@master/svg/icon/{{
@@ -32,6 +35,26 @@
                     }}.svg"
                     alt="btc"
                 />
+            </div>
+            <div style="height: 60px">
+                <ngx-charts-line-chart
+                    [view]="view"
+                    [gradient]="false"
+                    [scheme]="colorScheme"
+                    [legend]="legend"
+                    [showGridLines]="false"
+                    [showXAxisLabel]="false"
+                    [showYAxisLabel]="false"
+                    [xAxis]="xAxis"
+                    [yAxis]="yAxis"
+                    [timeline]="timeline"
+                    [results]="[{ name: 'Fee paid $', series: card.series }]"
+                    [autoScale]="true"
+                    [yScaleMin]="card.lowest"
+                    [yScaleMax]="card.highest"
+                >
+                </ngx-charts-line-chart>
+                <!--                    [results]="multi[card.id]"-->
             </div>
             <div>
                 <button
@@ -42,34 +65,44 @@
                     "
                     type="button"
                     (click)="refresh($event)"
+                    ngbTooltip="Refresh transactions"
                 >
                     <i class="bi-arrow-clockwise"></i>
                 </button>
             </div>
         </div>
 
-        <ul class="list-unstyled mb-4">
-            <!--            <li class="d-flex justify-content-between">-->
-            <!--                <div>Last transaction cost</div>-->
-            <!--                <div>{{ card.total1 | currency }}</div>-->
-            <!--            </li>-->
+        <ul class="list-unstyled mb-2">
             <li class="d-flex justify-content-between">
-                <div>Total cost for last 5 transactions</div>
-                <div>{{ card.total5 | currency }}</div>
+                <div>Average cost 5 last transactions</div>
+                <div>{{ card.total5 / 5 | currency }}</div>
             </li>
             <li class="d-flex justify-content-between mb-3">
-                <div>Total cost for last 10 transactions</div>
-                <div>{{ card.total10 | currency }}</div>
+                <div>Average cost 10 last transactions</div>
+                <div>{{ card.total10 / 10 | currency }}</div>
             </li>
+            <!--            <li class="d-flex justify-content-between">-->
+            <!--                <div>Total cost for last 5 transactions</div>-->
+            <!--                <div>{{ card.total5 | currency }}</div>-->
+            <!--            </li>-->
+            <!--            <li class="d-flex justify-content-between mb-3">-->
+            <!--                <div>Total cost for last 10 transactions</div>-->
+            <!--                <div>{{ card.total10 | currency }}</div>-->
+            <!--            </li>-->
             <li class="d-flex justify-content-between mb-3">
                 <div>
                     Potential savings
                     <i
                         class="bi bi-info-circle"
-                        ngbTooltip="Based on recent transactions when switching to Solana network"
+                        ngbTooltip="Estimated savings from recent transactions if used Solana network instead"
                     ></i>
                 </div>
-                <div class="font-weight-bold text-success">
+                <div
+                    [ngClass]="{
+                        'text-success font-weight-bold': card.total10 > 1
+                    }"
+                >
+                    <!--                  // change it to sum of all transactions within last month or two-->
                     {{ card.total10 | currency }}
                 </div>
             </li>
@@ -85,7 +118,7 @@
                     {{ card.highest | currency }}
                 </div>
             </li>
-            <li class="d-flex justify-content-between mb-2">
+            <li class="d-flex justify-content-between">
                 <div>
                     Lowest transaction(s) cost
                     <i
@@ -99,67 +132,62 @@
             </li>
         </ul>
 
-        <div style="min-height: 500px">
-            <table class="table" [class.table-striped]="!loading">
-                <thead>
-                    <tr>
-                        <th>Txn</th>
-                        <th class="text-center">Date</th>
-                        <th class="text-center">Fee</th>
-                        <th class="text-center">Est. Cost</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngIf="loading">
-                        <td colspan="4" class="text-center">
-                            <div
-                                class="spinner-border text-secondary mt-4"
-                                role="status"
-                            >
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr *ngIf="!loading && message">
-                        <td colspan="4" class="text-center">
-                            {{ message }}
-                        </td>
-                    </tr>
-                    <ng-container *ngIf="!loading">
-                        <tr
-                            *ngFor="
-                                let transaction of card.transactions
-                                    | slice: 0:10
-                            "
-                        >
-                            <td
-                                class="text-center"
-                                (click)="openTransaction($event, transaction)"
-                                [title]="transaction.id"
-                            >
-                                <i class="bi bi-arrow-up-right-square"></i>
-                            </td>
-                            <td class="text-center">
-                                {{ transaction.date | ago }}
-                            </td>
-                            <td
-                                class="text-center"
-                                title="{{ transaction.fee }}"
-                            >
-                                {{ transaction.fee | number: "1.6-6" }}
-                            </td>
-                            <td class="text-center">
-                                {{
-                                    transaction.feeValue
-                                        | currency: "USD":"symbol":"1.2-4"
-                                }}
-                            </td>
-                        </tr>
-                    </ng-container>
-                </tbody>
-            </table>
-        </div>
-        <nav aria-label="Page navigation example">
+        <!--        <button type="button" class="w-100 btn btn-lg btn-outline-primary">-->
+        <!--            Load more-->
+        <!--        </button>-->
+    </div>
+    <table class="table" [class.table-striped]="!loading">
+        <thead>
+            <tr>
+                <th class="text-center">Txn</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Fee</th>
+                <th class="text-center">Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="loading">
+                <td colspan="4" class="text-center">
+                    <div
+                        class="spinner-border text-secondary mt-4"
+                        role="status"
+                    >
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngIf="!loading && message">
+                <td colspan="4" class="text-center">
+                    {{ message }}
+                </td>
+            </tr>
+            <ng-container *ngIf="!loading">
+                <tr *ngFor="let transaction of card.transactions | slice: 0:10">
+                    <td
+                        class="text-center"
+                        (click)="openTransaction($event, transaction)"
+                        [title]="transaction.id"
+                    >
+                        <i class="bi bi-arrow-up-right-square"></i>
+                    </td>
+                    <td class="text-center">
+                        {{ transaction.date | ago }}
+                    </td>
+                    <td class="text-center" title="{{ transaction.fee }}">
+                        {{ transaction.fee | number: "1.6-6" }}
+                    </td>
+                    <td class="text-center">
+                        {{
+                            transaction.feeValue
+                                | currency: "USD":"symbol":"1.2-4"
+                        }}
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+    <div class="card-body py-2">
+        <nav>
             <ul class="pagination justify-content-center">
                 <!--                <li class="page-item disabled">-->
                 <!--                    <a-->
@@ -173,14 +201,10 @@
                 <!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
                 <!--                <li class="page-item"><a class="page-link" href="#">...</a></li>-->
                 <li class="page-item">
-                    <a class="page-link" href="#">Next Page</a>
+                    <a class="page-link rounded-pill" href="#">Next Page</a>
                 </li>
             </ul>
         </nav>
-
-        <!--        <button type="button" class="w-100 btn btn-lg btn-outline-primary">-->
-        <!--            Load more-->
-        <!--        </button>-->
     </div>
 </div>
 

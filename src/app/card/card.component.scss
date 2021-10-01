@@ -1,9 +1,11 @@
 @import "../../scss/variables";
 
 .card-crypto {
-    max-width: 500px;
+    width: 350px;
+
     .card-body {
         min-width: 300px;
+        padding: 1rem;
     }
     transition: border-left-color 0.2s ease-in-out, background-color 0.3s linear,
         border-right-color 0.2s ease-in-out;
@@ -19,6 +21,14 @@
     .table th,
     .table td {
         padding: 0.6rem;
+    }
+
+    .table th {
+        border-bottom: none;
+    }
+
+    .table tr:last-child td {
+        border-bottom: 1px solid #dee2e6; // @todo find source for this color
     }
 
     .app-button-refresh {

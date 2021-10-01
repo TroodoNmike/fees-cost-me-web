@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CardInterface } from './interfaces/card.interface';
 import { ProfileInterface } from './interfaces/profile.interface';
+import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-root',
@@ -13,10 +14,13 @@ export class AppComponent {
             name: 'Default Set',
             cards: [
                 {
+                    id: 0,
                     address: '1EY2jSam6Q5Kp7D1sbBMhvX8z74Qmkkeuc',
+                    name: '',
                     blockchain: 'bitcoin',
                     icon: 'btc',
                     transactions: [],
+                    series: [],
                     total1: 0,
                     total5: 0,
                     total10: 0,
@@ -24,30 +28,27 @@ export class AppComponent {
                     lowest: 0,
                 },
                 {
+                    id: 1,
                     address: '0xe055248df087faba7758055cbdf6aa9acf246627',
+                    name: '',
                     blockchain: 'ethereum',
                     icon: 'eth',
                     transactions: [],
+                    series: [],
                     total1: 0,
                     total5: 0,
                     total10: 0,
                     highest: 0,
                     lowest: 0,
                 },
-                // {
-                //     address: '14Fyz7dpFrJnibbq2296vihzdFBgrsikxE4kERKKk3HG',
-                //     blockchain: 'solana',
-                //     icon: 'sol',
-                //     transactions: [],
-                //     total1: 0,
-                //     total5: 0,
-                //     total10: 0,
-                // },
                 {
+                    id: 2,
                     address: '9K8QMqQkuCxUFHFh2JogHNEtXSestisnXNdzDwPeDECU',
+                    name: '',
                     blockchain: 'solana',
                     icon: 'sol',
                     transactions: [],
+                    series: [],
                     total1: 0,
                     total5: 0,
                     total10: 0,
@@ -59,7 +60,8 @@ export class AppComponent {
     ];
     selectedProfile: ProfileInterface = this.profiles[0];
 
-    constructor() {
+    constructor(private tooltipConfig: NgbTooltipConfig) {
+        tooltipConfig.tooltipClass = 'app-tooltip';
         // let localCards = localStorage.getItem('cards');
         // if (localCards) {
         //     this.cards = JSON.parse(localCards);

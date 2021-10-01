@@ -19,6 +19,36 @@ export class CardComponent implements OnInit {
     loading = true;
     message = '';
 
+    multi: any[] = [];
+    view: any = [200, 40];
+
+    // options
+    legend: boolean = false;
+    showLabels: boolean = false;
+    animations: boolean = false;
+    xAxis: boolean = false;
+    yAxis: boolean = false;
+    timeline: boolean = false;
+
+    scale = [
+        {
+            min: 0,
+            max: 40,
+        },
+        {
+            min: 0,
+            max: 30,
+        },
+        {
+            min: 0,
+            max: 0.005,
+        },
+    ];
+
+    public colorScheme: any = {
+        domain: ['#3f51b5'], // fixed for now
+    };
+
     constructor(private addressService: AddressService) {}
 
     ngOnInit(): void {
@@ -35,6 +65,9 @@ export class CardComponent implements OnInit {
                 )
                 .subscribe((card) => {
                     this.card = card || undefined;
+                    // if (this.card && this.card.id === 0) {
+                    //     setTimeout(() => this.open());
+                    // }
                 });
         }
     }

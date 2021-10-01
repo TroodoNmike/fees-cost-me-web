@@ -29,7 +29,7 @@
 }
 
 .app-crypto-icon-box {
-    width: 50px;
+    width: 42px;
     img {
         width: 100%;
         height: auto;
@@ -50,4 +50,34 @@
         border-top: 0 !important;
         padding: 1rem 2rem !important;
     }
+}
+
+.app-tooltip {
+    &.show {
+        opacity: 1;
+    }
+    .tooltip-inner {
+        border: 1px solid $primary;
+        color: $primary;
+        background-color: white;
+    }
+}
+
+/*This is modifying the btn-primary colors but you could create your own .btn-something class as well*/
+//.btn-outline-primary {
+//  color: #fff;
+//  background-color: #0495c9;
+//  border-color: #357ebd; /*set the color you want here*/
+//}
+.btn-outline-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+    color: darken($primary, 10%);
+    background-color: rgba($primary, 0.05);
+    border-color: rgba($primary, 0.75);
+
+    //background-color: #00b3db;
+    //border-color: #285e8e; /*set the color you want here*/
 }

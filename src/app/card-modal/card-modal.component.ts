@@ -52,10 +52,13 @@ export class CardModalComponent implements OnInit {
 
     selectAddress() {
         this.card = {
+            id: 2,
             address: this.address,
+            name: '',
             blockchain: this.blockchain,
             icon: this.icon,
             transactions: [],
+            series: [],
             total1: 0,
             total5: 0,
             total10: 0,

@@ -48,8 +48,19 @@ export class AddressService {
                     card.highest = highest;
                     card.lowest = lowest;
                     card.transactions = data.data;
+                    card.series = this.getSeries(data.data);
                     return card;
                 })
             );
+    }
+
+    private getSeries(data: TransactionInterface[]) {
+        const items: { name: any; value: any }[] = [];
+
+        data.forEach((item) => {
+            items.push({ name: item.date, value: item.feeValue });
+        });
+
+        return items;
     }
 }
