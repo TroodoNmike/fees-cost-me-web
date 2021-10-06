@@ -8,6 +8,7 @@ import {
     NgbTooltipConfig,
     NgbTooltipModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { ClipboardModule } from 'ngx-clipboard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,11 +19,13 @@ import { CardModalComponent } from './card-modal/card-modal.component';
 import { AddressService } from './services/address.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddressShortPipe } from '../pipes/address-short.pipe';
 
 @NgModule({
     declarations: [
         AppComponent,
         AgoPipe,
+        AddressShortPipe,
         CardComponent,
         CardEmptyComponent,
         CardModalComponent,
@@ -37,6 +40,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         NgbTooltipModule,
         NgxChartsModule,
         BrowserAnimationsModule,
+        ClipboardModule,
     ],
     providers: [AddressService, NgbTooltipConfig],
     bootstrap: [AppComponent],

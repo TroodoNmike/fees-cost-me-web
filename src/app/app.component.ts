@@ -16,7 +16,7 @@ export class AppComponent {
                 {
                     id: 0,
                     address: '1EY2jSam6Q5Kp7D1sbBMhvX8z74Qmkkeuc',
-                    name: '',
+                    name: 'Account 1',
                     blockchain: 'bitcoin',
                     icon: 'btc',
                     transactions: [],
@@ -30,7 +30,7 @@ export class AppComponent {
                 {
                     id: 1,
                     address: '0xe055248df087faba7758055cbdf6aa9acf246627',
-                    name: '',
+                    name: 'Account 2',
                     blockchain: 'ethereum',
                     icon: 'eth',
                     transactions: [],
@@ -44,7 +44,7 @@ export class AppComponent {
                 {
                     id: 2,
                     address: '9K8QMqQkuCxUFHFh2JogHNEtXSestisnXNdzDwPeDECU',
-                    name: '',
+                    name: 'Account 3',
                     blockchain: 'solana',
                     icon: 'sol',
                     transactions: [],

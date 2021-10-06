@@ -35,7 +35,10 @@
             <div *ngFor="let item of selectedProfile.cards">
                 <app-card [card]="item"></app-card>
             </div>
-            <app-card-empty (addCard)="addCard($event)"></app-card-empty>
+            <app-card-empty
+                (addCard)="addCard($event)"
+                [totalCards]="selectedProfile.cards.length"
+            ></app-card-empty>
         </div>
     </div>
 </div>
