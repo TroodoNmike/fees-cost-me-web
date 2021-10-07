@@ -7,7 +7,7 @@ import {
     TemplateRef,
     ViewChild,
 } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import {
     AvailableBlockchains,
     AvailableCryptoIcons,
@@ -192,5 +192,14 @@ export class CardModalComponent implements OnInit {
 
     copy() {
         $('.toast-copied').toast('show');
+    }
+
+    copyToClipboard(t: NgbTooltip) {
+        t.open();
+        setTimeout(() => t.close(), 1500);
+    }
+
+    isNew() {
+        return this.card.address === '';
     }
 }

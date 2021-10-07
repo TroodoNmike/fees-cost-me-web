@@ -36,5 +36,4 @@ export class CardEmpty implements CardInterface {
     total1 = 0;
     total5 = 0;
     total10 = 0;
-    // blockchain = 'solana';
 }

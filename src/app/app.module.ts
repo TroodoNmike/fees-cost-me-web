@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {
     NgbModalModule,
+    NgbPopoverModule,
     NgbTooltipConfig,
     NgbTooltipModule,
 } from '@ng-bootstrap/ng-bootstrap';
@@ -20,6 +21,7 @@ import { AddressService } from './services/address.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddressShortPipe } from '../pipes/address-short.pipe';
+import { OpenAddressInExplorerDirective } from './directives/open-address-in-explorer.directive';
 
 @NgModule({
     declarations: [
@@ -29,6 +31,7 @@ import { AddressShortPipe } from '../pipes/address-short.pipe';
         CardComponent,
         CardEmptyComponent,
         CardModalComponent,
+        OpenAddressInExplorerDirective,
     ],
     imports: [
         BrowserModule,
@@ -41,6 +44,7 @@ import { AddressShortPipe } from '../pipes/address-short.pipe';
         NgxChartsModule,
         BrowserAnimationsModule,
         ClipboardModule,
+        NgbPopoverModule,
     ],
     providers: [AddressService, NgbTooltipConfig],
     bootstrap: [AppComponent],
