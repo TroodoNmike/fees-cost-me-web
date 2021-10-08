@@ -61,6 +61,7 @@ export class AppComponent {
     selectedProfile: ProfileInterface = this.profiles[0];
 
     constructor(private tooltipConfig: NgbTooltipConfig) {
+        this.addProfile();
         tooltipConfig.tooltipClass = 'app-tooltip';
         // let localCards = localStorage.getItem('cards');
         // if (localCards) {
@@ -69,7 +70,8 @@ export class AppComponent {
     }
 
     addProfile() {
-        this.profiles.push({ name: 'New Profile', cards: [] });
+        const name = 'Profile ' + this.profiles.length;
+        this.profiles.push({ name: name, cards: [] });
         this.selectedProfile = this.profiles[this.profiles.length - 1];
     }
 
@@ -79,5 +81,14 @@ export class AppComponent {
 
     selectProfile(profile: ProfileInterface) {
         this.selectedProfile = profile;
+    }
+
+    removeProfile() {
+        if (this.selectedProfile != this.profiles[0]) {
+            this.profiles = this.profiles.filter(
+                (t) => t !== this.selectedProfile
+            );
+            this.selectedProfile = this.profiles[0];
+        }
     }
 }

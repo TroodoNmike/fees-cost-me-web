@@ -17,17 +17,45 @@
                     class="bi bi-check2 mr-1"
                     *ngIf="selectedProfile.name == profile.name"
                 ></i>
-                {{ profile.name
-                }}<i class="bi bi-three-dots-vertical ml-2" *ngIf="i > 0"></i>
+                {{ profile.name }}
+                <span *ngIf="profiles.length > 1 && i != 0" class="total-cards"
+                    >({{ profile.cards.length }})</span
+                >
+            </button>
+
+            <button
+                type="button"
+                class="btn btn-lg btn-outline-primary rounded-pill mr-2"
+                (click)="addProfile()"
+            >
+                <i class="bi-plus bi-plus-lg mr-1"></i> New
             </button>
 
             <button
                 type="button"
                 class="btn btn-lg btn-outline-primary rounded-pill"
-                (click)="addProfile()"
+                id="dropdownMenuListButton"
+                data-toggle="dropdown"
             >
-                <i class="bi-plus bi-plus-lg mr-1"></i> New
+                <i class="bi bi-list mr-1"></i>
             </button>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuListButton">
+                <a class="dropdown-item text-primary" href="#">
+                    <i class="bi bi-pencil mr-1"></i> Rename profile
+                </a>
+                <a
+                    class="dropdown-item text-danger"
+                    href="#"
+                    (click)="removeProfile()"
+                >
+                    <i class="bi bi-x mr-1"></i> Remove profile
+                </a>
+            </div>
+
+            <!--            <div>-->
+            <!--                <i class="bi bi-three-dots-vertical ml-2"></i>-->
+            <!--            </div>-->
         </div>
     </div>
     <div class="row">
