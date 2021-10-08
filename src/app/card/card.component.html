@@ -38,8 +38,13 @@
                     alt="btc"
                 />
             </div>
-            <div style="height: 60px">
+            <div style="height: 60px" class="d-flex justify-content-center">
+                <div
+                    class="spinner-border text-secondary"
+                    *ngIf="loading"
+                ></div>
                 <ngx-charts-line-chart
+                    *ngIf="!loading"
                     [view]="view"
                     [gradient]="false"
                     [scheme]="colorScheme"

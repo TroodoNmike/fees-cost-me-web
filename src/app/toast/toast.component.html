@@ -1,0 +1,25 @@
+<div class="d-flex flex-column">
+    <div *ngFor="let toast of toastService.toasts">
+        <ngb-toast
+            class="mb-2"
+            [autohide]="true"
+            [delay]="toast.delay || 5000"
+            (hidden)="toastService.remove(toast)"
+        >
+            <div
+                class="d-flex justify-content-between"
+                [class.text-primary]="!toast.type"
+                [class.text-danger]="toast.type == 'danger'"
+                [class.font-weight-bold]="toast.type == 'danger'"
+            >
+                <div>
+                    <i class="bi bi-info-circle mr-1"></i>
+                    {{ toast.textOrTpl }}
+                </div>
+                <div>
+                    <i class="bi bi-x app-pointer" (click)="close(toast)"></i>
+                </div>
+            </div>
+        </ngb-toast>
+    </div>
+</div>

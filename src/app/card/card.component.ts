@@ -60,29 +60,6 @@ export class CardComponent implements OnInit {
         if (this.card) {
             this.getCardData(this.card);
         }
-        // if (this.card) {
-        //     this.addressService
-        //         .getTransactionsForCard(this.card)
-        //         .pipe(
-        //             delay(500),
-        //             finalize(() => (this.loading = false)),
-        //             catchError((error) => {
-        //                 this.message = 'Could not load / find transactions';
-        //                 return of(undefined);
-        //             })
-        //         )
-        //         .subscribe((card) => {
-        //             this.card = card || undefined;
-        //             if (this.card) {
-        //                 this.totalPages = Math.ceil(
-        //                     this.card.transactions.length / this.perPage
-        //                 );
-        //             }
-        //             if (this.card && this.card.id === 0) {
-        //                 setTimeout(() => this.open());
-        //             }
-        //         });
-        // }
     }
 
     open() {
@@ -95,6 +72,7 @@ export class CardComponent implements OnInit {
     }
 
     refresh($event: MouseEvent) {
+        this.getCardData(this.card, true);
         $event.stopPropagation();
     }
 
@@ -140,13 +118,13 @@ export class CardComponent implements OnInit {
         $event.stopPropagation();
     }
 
-    private getCardData(card: CardInterface) {
+    private getCardData(card: CardInterface, refresh = false) {
         this.page = 1;
         this.totalPages = 0;
         this.loading = true;
 
         this.addressService
-            .getTransactionsForCard(card)
+            .getTransactionsForCard(card, refresh)
             .pipe(
                 delay(500),
                 finalize(() => (this.loading = false)),
@@ -165,9 +143,9 @@ export class CardComponent implements OnInit {
                     }
 
                     // @todo to be removed
-                    if (this.card && this.card.id === 0) {
-                        setTimeout(() => this.open());
-                    }
+                    // if (this.card && this.card.id === 0) {
+                    //     setTimeout(() => this.open());
+                    // }
                 }
             });
     }

@@ -10,10 +10,12 @@ import { map } from 'rxjs/operators';
 export class AddressService {
     constructor(private client: HttpClient) {}
 
-    public getTransactionsForCard(card: CardInterface) {
+    public getTransactionsForCard(card: CardInterface, refresh = false) {
         return this.client
             .get<{ data: TransactionInterface[] }>(
-                `http://localhost:3000/blockchain/${card.blockchain}/${card.address}`
+                `http://localhost:3000/blockchain/${card.blockchain}/${
+                    card.address
+                }${refresh ? `?refresh=true` : ''}`
             )
             .pipe(
                 map((data): CardInterface => {

@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {
     NgbModalModule,
     NgbPopoverModule,
+    NgbToastModule,
     NgbTooltipConfig,
     NgbTooltipModule,
 } from '@ng-bootstrap/ng-bootstrap';
@@ -22,6 +23,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddressShortPipe } from '../pipes/address-short.pipe';
 import { OpenAddressInExplorerDirective } from './directives/open-address-in-explorer.directive';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +34,7 @@ import { OpenAddressInExplorerDirective } from './directives/open-address-in-exp
         CardEmptyComponent,
         CardModalComponent,
         OpenAddressInExplorerDirective,
+        ToastComponent,
     ],
     imports: [
         BrowserModule,
@@ -45,6 +48,7 @@ import { OpenAddressInExplorerDirective } from './directives/open-address-in-exp
         BrowserAnimationsModule,
         ClipboardModule,
         NgbPopoverModule,
+        NgbToastModule,
     ],
     providers: [AddressService, NgbTooltipConfig],
     bootstrap: [AppComponent],

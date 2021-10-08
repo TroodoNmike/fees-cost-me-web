@@ -15,6 +15,7 @@ import {
     CardInterface,
 } from '../interfaces/card.interface';
 import detectEthereumProvider from '@metamask/detect-provider';
+import { ToastService } from '../services/toast.service';
 
 declare var window: any;
 declare var $: any;
@@ -51,7 +52,10 @@ export class CardModalComponent implements OnInit {
     };
     editMode = false;
 
-    constructor(private modalService: NgbModal) {}
+    constructor(
+        private modalService: NgbModal,
+        private toastService: ToastService
+    ) {}
 
     ngOnInit(): void {
         this.openCard.subscribe((data) => {
@@ -85,6 +89,8 @@ export class CardModalComponent implements OnInit {
             address: this.card.address,
             blockchain: this.card.blockchain,
         });
+
+        this.toastService.show('Success');
     }
 
     phantom() {
@@ -140,8 +146,6 @@ export class CardModalComponent implements OnInit {
     }
 
     async liquality() {
-        console.log('li');
-
         try {
             const what = await window.bitcoin.enable();
             if (what) {
@@ -159,8 +163,7 @@ export class CardModalComponent implements OnInit {
                 // console.log(result);
             }
         } catch (exception) {
-            console.log('exception', exception);
-            $('.toast').toast('show');
+            this.toastService.show(exception, { type: 'danger' });
         }
     }
 
@@ -188,10 +191,6 @@ export class CardModalComponent implements OnInit {
         this.card.icon = icon;
         this.card.name = name;
         this.editMode = true;
-    }
-
-    copy() {
-        $('.toast-copied').toast('show');
     }
 
     copyToClipboard(t: NgbTooltip) {
