@@ -1,77 +1,92 @@
-<div class="container pt-4">
-    <div class="row">
-        <div class="col-12 d-flex mb-3 justify-content-center">
-            <button
-                type="button"
-                class="
-                    btn btn-lg btn-outline-primary
-                    rounded-pill
-                    app-profile-button
-                    mr-2
-                "
-                [class.hello]="selectedProfile.name == profile.name"
-                *ngFor="let profile of profiles; index as i"
-                (click)="selectProfile(profile)"
-            >
-                <i
-                    class="bi bi-check2 mr-1"
-                    *ngIf="selectedProfile.name == profile.name"
-                ></i>
-                {{ profile.name }}
-                <span *ngIf="profiles.length > 1 && i != 0" class="total-cards"
-                    >({{ profile.cards.length }})</span
+<div class="d-flex flex-column justify-content-between min-vh-100">
+    <div class="container pt-4">
+        <div class="row">
+            <div class="col-12 d-flex mb-3 justify-content-center">
+                <button
+                    type="button"
+                    class="
+                        btn btn-lg btn-outline-primary
+                        rounded-pill
+                        app-profile-button
+                        mr-2
+                    "
+                    [class.selected-profile]="
+                        selectedProfile.name == profile.name
+                    "
+                    *ngFor="let profile of profiles; index as i"
+                    (click)="selectProfile(profile)"
                 >
-            </button>
+                    <!--                    <i-->
+                    <!--                        class="bi bi-check2 mr-1"-->
+                    <!--                        *ngIf="selectedProfile.name == profile.name"-->
+                    <!--                    ></i>-->
+                    {{ profile.name }}
+                    <span
+                        *ngIf="profiles.length > 1 && i != 0"
+                        class="total-cards"
+                        >({{ profile.cards.length }})</span
+                    >
+                </button>
 
-            <button
-                type="button"
-                class="btn btn-lg btn-outline-primary rounded-pill mr-2"
-                (click)="addProfile()"
-            >
-                <i class="bi-plus bi-plus-lg mr-1"></i> New
-            </button>
-
-            <button
-                type="button"
-                class="btn btn-lg btn-outline-primary rounded-circle"
-                id="dropdownMenuListButton"
-                (click)="editProfile()"
-                data-toggle="dropdown"
-                *ngIf="
-                    profiles.length > 1 && selectedProfile.name != 'Default Set'
-                "
-            >
-                <i class="bi bi-pencil"></i>
-            </button>
-
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuListButton">
-                <a class="dropdown-item text-primary" href="#">
-                    <i class="bi bi-pencil mr-1"></i> Rename profile
-                </a>
-                <a
-                    class="dropdown-item text-danger"
-                    href="#"
-                    (click)="removeProfile()"
+                <button
+                    type="button"
+                    class="btn btn-lg btn-outline-primary rounded-pill mr-2"
+                    (click)="addProfile()"
                 >
-                    <i class="bi bi-x mr-1"></i> Remove profile
-                </a>
+                    <i class="bi-plus bi-plus-lg mr-1"></i> New
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-lg btn-outline-primary rounded-circle"
+                    id="dropdownMenuListButton"
+                    (click)="editProfile()"
+                    data-toggle="dropdown"
+                    *ngIf="
+                        profiles.length > 1 &&
+                        selectedProfile.name != 'Default Set'
+                    "
+                >
+                    <i class="bi bi-pencil"></i>
+                </button>
+
+                <div
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuListButton"
+                >
+                    <a class="dropdown-item text-primary" href="#">
+                        <i class="bi bi-pencil mr-1"></i> Rename profile
+                    </a>
+                    <a
+                        class="dropdown-item text-danger"
+                        href="#"
+                        (click)="removeProfile()"
+                    >
+                        <i class="bi bi-x mr-1"></i> Remove profile
+                    </a>
+                </div>
             </div>
-
-            <!--            <div>-->
-            <!--                <i class="bi bi-three-dots-vertical ml-2"></i>-->
-            <!--            </div>-->
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <div *ngFor="let item of selectedProfile.cards">
+                    <app-card [card]="item"></app-card>
+                </div>
+                <app-card-empty
+                    (addCard)="addCard($event)"
+                    [totalCards]="selectedProfile.cards.length"
+                    *ngIf="selectedProfile.cards.length < 3"
+                ></app-card-empty>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <div *ngFor="let item of selectedProfile.cards">
-                <app-card [card]="item"></app-card>
-            </div>
-            <app-card-empty
-                (addCard)="addCard($event)"
-                [totalCards]="selectedProfile.cards.length"
-                *ngIf="selectedProfile.cards.length < 3"
-            ></app-card-empty>
+
+    <div class="footer">
+        <div class="py-2 text-center">
+            <a href="/" class="btn-link" target="_blank">
+                <i class="bi bi-github mr-1"></i>
+                Github</a
+            >
         </div>
     </div>
 </div>

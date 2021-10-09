@@ -1,8 +1,8 @@
 @import "../scss/variables";
 
 .app-profile-button {
-    &.hello {
-        background-color: rgba($primary, 0.02);
+    &.selected-profile {
+        background-color: $solana;
         &:hover {
             color: $primary;
         }
@@ -18,4 +18,8 @@
     font-size: 12px;
     top: -10px;
     position: relative;
+}
+
+.footer {
+    background-color: $footer-bg;
 }
