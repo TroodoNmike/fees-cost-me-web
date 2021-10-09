@@ -91,4 +91,8 @@ export class AppComponent {
             this.selectedProfile = this.profiles[0];
         }
     }
+
+    editProfile() {
+        console.log('edit');
+    }
 }

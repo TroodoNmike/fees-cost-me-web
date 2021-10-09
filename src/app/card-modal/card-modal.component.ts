@@ -16,9 +16,10 @@ import {
 } from '../interfaces/card.interface';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { ToastService } from '../services/toast.service';
+import { Subscription } from 'rxjs';
 
 declare var window: any;
-declare var $: any;
+
 @Component({
     selector: 'app-card-modal',
     templateUrl: './card-modal.component.html',
@@ -33,6 +34,7 @@ export class CardModalComponent implements OnInit {
     modal: NgbModalRef | undefined = undefined;
     card: CardInterface = new CardEmpty();
 
+    subscription = new Subscription();
     examples: { [key: string]: string[] } = {
         bitcoin: [
             '3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5',
@@ -65,9 +67,6 @@ export class CardModalComponent implements OnInit {
                 this.open(this.contentTemplate);
             }
         });
-
-        this.goPhantom();
-        this.goLiquality();
     }
     open(content: TemplateRef<any>) {
         this.modal = this.modalService.open(content, {
@@ -89,15 +88,19 @@ export class CardModalComponent implements OnInit {
             address: this.card.address,
             blockchain: this.card.blockchain,
         });
-
-        this.toastService.show('Success');
     }
 
-    phantom() {
+    async phantom() {
         const isPhantomInstalled = window.solana && window.solana.isPhantom;
-
         if (isPhantomInstalled) {
-            window.solana.connect();
+            try {
+                const resp = await window.solana.connect();
+                const pubKey = resp.publicKey.toString();
+                this.editAndSelect(pubKey, 'solana', 'sol');
+            } catch (exception) {
+                this.toastService.show('Could not connect', { type: 'danger' });
+                console.log(exception);
+            }
         }
     }
 
@@ -108,17 +111,6 @@ export class CardModalComponent implements OnInit {
                 this.removeCard.emit();
             });
             this.modal.close();
-        }
-    }
-    async goPhantom() {
-        const isPhantomInstalled =
-            (await window.solana) && (await window.solana.isPhantom);
-        if (isPhantomInstalled) {
-            window.solana.on('connect', () => {
-                this.card.address = window.solana.publicKey.toString();
-                this.card.blockchain = 'solana';
-                this.card.icon = 'sol';
-            });
         }
     }
 
@@ -133,51 +125,47 @@ export class CardModalComponent implements OnInit {
                     method: 'eth_requestAccounts',
                 });
 
+                // @todo what happens if there are more than 1 account giving access
                 if (accounts.length > 0) {
-                    this.card.address = accounts[0];
-                    this.card.blockchain = 'ethereum';
-                    this.card.icon = 'eth';
-                    this.editMode = true;
+                    this.editAndSelect(accounts[0], 'ethereum', 'eth');
                 }
             } else {
-                console.log('Please install MetaMask!');
+                this.toastService.show('Please install MetaMask', {
+                    type: 'danger',
+                });
             }
         }
     }
 
     async liquality() {
         try {
-            const what = await window.bitcoin.enable();
-            if (what) {
-                console.log(what);
-                console.log('address', what[0]['address']);
-
-                this.card.address = what[0]['address'];
-                this.card.blockchain = 'bitcoin';
-                this.card.icon = 'btc';
+            const bitcoin = await window.bitcoin.enable();
+            if (bitcoin) {
                 // const result = await window.bitcoin.request({
                 //     method: 'wallet_getAddresses',
                 //     params: [0, 10],
                 // });
 
-                // console.log(result);
+                this.editAndSelect(bitcoin[0]['address'], 'bitcoin', 'btc');
             }
         } catch (exception) {
-            this.toastService.show(exception, { type: 'danger' });
+            this.toastService.show('Could not connect', { type: 'danger' });
+            console.log(exception);
         }
     }
 
     async goLiquality() {
-        // const what = await window.bitcoin.enable();
-        // if (what) {
-        //     console.log(what);
-        //
-        //     const result = await window.bitcoin.request({
-        //         method: 'wallet_getAddresses',
-        //         params: [0, 10],
-        //     });
-        //     console.log(result);
-        // }
+        const what = await window.bitcoin.enable();
+        if (what) {
+            console.log(what);
+
+            const result = await window.bitcoin.request({
+                method: 'wallet_getAddresses',
+                params: [0, 10],
+            });
+            console.log(result);
+            console.log('anything?');
+        }
     }
 
     example(
@@ -186,11 +174,8 @@ export class CardModalComponent implements OnInit {
         blockchain: AvailableBlockchains,
         icon: AvailableCryptoIcons
     ) {
-        this.card.address = this.examples[blockchain][number];
-        this.card.blockchain = blockchain;
-        this.card.icon = icon;
         this.card.name = name;
-        this.editMode = true;
+        this.editAndSelect(this.examples[blockchain][number], blockchain, icon);
     }
 
     copyToClipboard(t: NgbTooltip) {
@@ -200,5 +185,16 @@ export class CardModalComponent implements OnInit {
 
     isNew() {
         return this.card.address === '';
+    }
+
+    private editAndSelect(
+        address: string,
+        blockChain: AvailableBlockchains,
+        icon: AvailableCryptoIcons
+    ) {
+        this.card.address = address;
+        this.card.blockchain = blockChain;
+        this.card.icon = icon;
+        this.selectAddress();
     }
 }

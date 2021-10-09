@@ -33,11 +33,15 @@
 
             <button
                 type="button"
-                class="btn btn-lg btn-outline-primary rounded-pill"
+                class="btn btn-lg btn-outline-primary rounded-circle"
                 id="dropdownMenuListButton"
+                (click)="editProfile()"
                 data-toggle="dropdown"
+                *ngIf="
+                    profiles.length > 1 && selectedProfile.name != 'Default Set'
+                "
             >
-                <i class="bi bi-list mr-1"></i>
+                <i class="bi bi-pencil"></i>
             </button>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuListButton">
@@ -66,6 +70,7 @@
             <app-card-empty
                 (addCard)="addCard($event)"
                 [totalCards]="selectedProfile.cards.length"
+                *ngIf="selectedProfile.cards.length < 3"
             ></app-card-empty>
         </div>
     </div>
