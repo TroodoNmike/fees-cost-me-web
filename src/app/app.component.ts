@@ -43,19 +43,15 @@ export class AppComponent {
         this.selectedProfile = profile;
     }
 
-    removeProfile() {
-        const confirm = prompt('sure?');
+    deleted($profile: ProfileInterface) {
+        if (this.selectedProfile.cards.length > 0) {
+            const confirmMsg = confirm('Are you sure?');
 
-        if (confirm) {
-            // to prevent dropdown being stuck on the screen
-            setTimeout(() => {
-                if (this.selectedProfile != this.profiles[0]) {
-                    this.profiles = this.profiles.filter(
-                        (t) => t !== this.selectedProfile
-                    );
-                    this.selectedProfile = this.profiles[0];
-                }
-            });
+            if (confirmMsg) {
+                this.deleteSelectedProfile();
+            }
+        } else {
+            this.deleteSelectedProfile();
         }
     }
 
@@ -70,5 +66,14 @@ export class AppComponent {
         );
         this.profiles[index] = $event;
         this.selectedProfile = $event;
+    }
+
+    private deleteSelectedProfile() {
+        if (this.selectedProfile != this.profiles[0]) {
+            this.profiles = this.profiles.filter(
+                (t) => t !== this.selectedProfile
+            );
+            this.selectedProfile = this.profiles[0];
+        }
     }
 }

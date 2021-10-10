@@ -1,4 +1,3 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -26,6 +25,10 @@ import { OpenAddressInExplorerDirective } from './directives/open-address-in-exp
 import { ToastComponent } from './toast/toast.component';
 import { ProfileEditComponent } from './profile/profile-edit.component';
 
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
+import { Router } from '@angular/router';
+import * as Sentry from '@sentry/angular';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -52,7 +55,26 @@ import { ProfileEditComponent } from './profile/profile-edit.component';
         NgbPopoverModule,
         NgbToastModule,
     ],
-    providers: [AddressService, NgbTooltipConfig],
+    providers: [
+        AddressService,
+        NgbTooltipConfig,
+        {
+            provide: ErrorHandler,
+            useValue: Sentry.createErrorHandler({
+                showDialog: true,
+            }),
+        },
+        {
+            provide: Sentry.TraceService,
+            deps: [Router],
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: () => () => {},
+            deps: [Sentry.TraceService],
+            multi: true,
+        },
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

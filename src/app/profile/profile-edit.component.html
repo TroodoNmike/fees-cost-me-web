@@ -32,6 +32,14 @@
             <div class="d-flex justify-content-center">
                 <button
                     type="button"
+                    class="btn btn-outline-primary rounded-pill mr-auto"
+                    (click)="deleteProfile()"
+                >
+                    <i class="bi bi-x-circle text-danger"></i>
+                    Delete profile
+                </button>
+                <button
+                    type="button"
                     class="btn btn-outline-primary rounded-pill mr-2"
                     (click)="saveProfile()"
                 >

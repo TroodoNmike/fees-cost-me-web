@@ -10,6 +10,7 @@ export class CardEmptyComponent {
     openCard: EventEmitter<CardInterface> = new EventEmitter();
 
     @Input() totalCards = 0;
+    @Input() profileName = '';
     @Output() addCard: EventEmitter<CardInterface> = new EventEmitter();
 
     open() {

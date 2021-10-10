@@ -36,12 +36,12 @@
                     <i class="bi-plus bi-plus-lg mr-1"></i> New
                 </button>
 
+                <!--                id="dropdownMenuListButton"-->
+                <!--                data-toggle="dropdown"-->
                 <button
                     type="button"
                     class="btn btn-lg btn-outline-primary rounded-circle"
-                    id="dropdownMenuListButton"
                     (click)="editProfileOpen(selectedProfile)"
-                    data-toggle="dropdown"
                     *ngIf="
                         profiles.length > 1 &&
                         selectedProfile.name != 'Default Set'
@@ -50,21 +50,21 @@
                     <i class="bi bi-pencil"></i>
                 </button>
 
-                <div
-                    class="dropdown-menu"
-                    aria-labelledby="dropdownMenuListButton"
-                >
-                    <a class="dropdown-item text-primary" href="#">
-                        <i class="bi bi-pencil mr-1"></i> Rename profile
-                    </a>
-                    <a
-                        class="dropdown-item text-danger"
-                        href="#"
-                        (click)="removeProfile()"
-                    >
-                        <i class="bi bi-x mr-1"></i> Remove profile
-                    </a>
-                </div>
+                <!--                <div-->
+                <!--                    class="dropdown-menu"-->
+                <!--                    aria-labelledby="dropdownMenuListButton"-->
+                <!--                >-->
+                <!--                    <a class="dropdown-item text-primary" href="#">-->
+                <!--                        <i class="bi bi-pencil mr-1"></i> Rename profile-->
+                <!--                    </a>-->
+                <!--                    <a-->
+                <!--                        class="dropdown-item text-danger"-->
+                <!--                        href="#"-->
+                <!--                        (click)="removeProfile()"-->
+                <!--                    >-->
+                <!--                        <i class="bi bi-x mr-1"></i> Remove profile-->
+                <!--                    </a>-->
+                <!--                </div>-->
             </div>
         </div>
         <div class="row">
@@ -76,6 +76,7 @@
                     (addCard)="addCard($event)"
                     [totalCards]="selectedProfile.cards.length"
                     *ngIf="selectedProfile.cards.length < 3"
+                    [profileName]="selectedProfile.name"
                 ></app-card-empty>
             </div>
         </div>
@@ -98,4 +99,5 @@
 <app-profile-edit
     [edit]="editProfile"
     (saved)="saved($event)"
+    (delete)="deleted($event)"
 ></app-profile-edit>

@@ -77,11 +77,6 @@ export class CardComponent implements OnInit {
     }
 
     refreshCard(card: CardInterface) {
-        // this.page = 1;
-        // this.loading = true;
-        // this.addressService.getTransactionsForCard(card).subscribe((card) => {
-        //     this.card = card;
-        // });
         this.card = card;
         this.getCardData(card);
     }

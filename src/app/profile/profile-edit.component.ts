@@ -21,6 +21,7 @@ export class ProfileEditComponent implements OnInit {
     @ViewChild('modalContent') template: TemplateRef<any> | undefined;
     @Input() edit: EventEmitter<ProfileInterface> = new EventEmitter();
     @Output() saved: EventEmitter<ProfileInterface> = new EventEmitter();
+    @Output() delete: EventEmitter<ProfileInterface> = new EventEmitter();
 
     modal: NgbModalRef | undefined = undefined;
     profile: ProfileInterface = new ProfileEmpty();
@@ -37,6 +38,11 @@ export class ProfileEditComponent implements OnInit {
 
     saveProfile() {
         this.saved.emit(this.profile);
+        this.modal?.close(this.profile);
+    }
+
+    deleteProfile() {
+        this.delete.emit(this.profile);
         this.modal?.close(this.profile);
     }
 }
