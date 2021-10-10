@@ -40,7 +40,7 @@
                     type="button"
                     class="btn btn-lg btn-outline-primary rounded-circle"
                     id="dropdownMenuListButton"
-                    (click)="editProfile()"
+                    (click)="editProfileOpen(selectedProfile)"
                     data-toggle="dropdown"
                     *ngIf="
                         profiles.length > 1 &&
@@ -94,3 +94,8 @@
 <router-outlet></router-outlet>
 
 <app-toast></app-toast>
+
+<app-profile-edit
+    [edit]="editProfile"
+    (saved)="saved($event)"
+></app-profile-edit>

@@ -24,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddressShortPipe } from '../pipes/address-short.pipe';
 import { OpenAddressInExplorerDirective } from './directives/open-address-in-explorer.directive';
 import { ToastComponent } from './toast/toast.component';
+import { ProfileEditComponent } from './profile/profile-edit.component';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import { ToastComponent } from './toast/toast.component';
         CardModalComponent,
         OpenAddressInExplorerDirective,
         ToastComponent,
+        ProfileEditComponent,
     ],
     imports: [
         BrowserModule,

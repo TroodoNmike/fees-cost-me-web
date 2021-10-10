@@ -1,0 +1,52 @@
+<ng-template #modalContent let-editProfile>
+    <div
+        class="
+            modal-header
+            bg-primary
+            text-white
+            d-flex
+            justify-content-between
+            align-items-center
+        "
+    >
+        <h4 class="modal-title" id="modal-basic-title">Edit Profile</h4>
+        <div>
+            <i class="bi bi-x-lg app-pointer" (click)="editProfile.close()"></i>
+        </div>
+    </div>
+    <div class="modal-body p-4">
+        <form autocomplete="off">
+            <div class="form-group mb-4">
+                <label for="forProfileName" class="text-primary"
+                    >Profile name</label
+                >
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Profile Name"
+                    id="forProfileName"
+                    [(ngModel)]="profile.name"
+                    [ngModelOptions]="{ standalone: true }"
+                />
+            </div>
+            <div class="d-flex justify-content-center">
+                <button
+                    type="button"
+                    class="btn btn-outline-primary rounded-pill mr-2"
+                    (click)="saveProfile()"
+                >
+                    <i class="bi bi-check text-success"></i>
+                    Confirm
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-outline-primary rounded-pill"
+                    (click)="editProfile.dismiss()"
+                >
+                    <i class="bi bi-x text-danger"></i>
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</ng-template>

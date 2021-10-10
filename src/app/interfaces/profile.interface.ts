@@ -4,3 +4,8 @@ export interface ProfileInterface {
     name: string;
     cards: CardInterface[];
 }
+
+export class ProfileEmpty implements ProfileInterface {
+    name = '';
+    cards = [];
+}
