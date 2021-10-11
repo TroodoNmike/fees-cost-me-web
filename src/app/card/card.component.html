@@ -6,12 +6,7 @@
     <div class="card-header py-3 d-flex justify-content-between">
         <div class="d-flex">
             <div class="app-crypto-icon mr-2">
-                <img
-                    src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@master/svg/white/{{
-                        card.icon
-                    }}.svg"
-                    alt="btc"
-                />
+                <img src="/assets/svg/white/{{ card.icon }}.svg" alt="btc" />
             </div>
             <h4 class="my-0 fw-normal mr-2" *ngIf="!card.name">
                 {{ card.address | slice: 0:4 }}...{{ card.address | slice: -4 }}
@@ -31,12 +26,7 @@
     <div class="card-body">
         <div class="d-flex justify-content-between">
             <div class="app-crypto-icon-box">
-                <img
-                    src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@master/svg/icon/{{
-                        card.icon
-                    }}.svg"
-                    alt="btc"
-                />
+                <img src="/assets/svg/icon/{{ card.icon }}.svg" alt="btc" />
             </div>
             <div class="app-chart d-flex justify-content-center">
                 <div

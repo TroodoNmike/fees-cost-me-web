@@ -28,7 +28,22 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+                {
+                    "glob": "+(btc|eth|sol).svg",
+                    "input": "./node_modules/cryptocurrency-icons/svg/white/",
+                    "output": "/assets/svg/white/"
+                },
+                {
+                    "glob": "+(btc|eth|sol).svg",
+                    "input": "./node_modules/cryptocurrency-icons/svg/icon/",
+                    "output": "/assets/svg/icon/"
+                },
+                {
+                    "glob": "+(btc|eth|sol).svg",
+                    "input": "./node_modules/cryptocurrency-icons/svg/color/",
+                    "output": "/assets/svg/color/"
+                }
             ],
             "styles": [
               "src/scss/styles.scss"
@@ -45,7 +60,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
