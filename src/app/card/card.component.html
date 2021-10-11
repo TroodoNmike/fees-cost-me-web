@@ -100,7 +100,12 @@
                     }"
                 >
                     <!--                  // change it to sum of all transactions within last month or two-->
-                    {{ card.total10 | currency }}
+                    {{
+                        (card.total10 < 1 && card.total10 > 0
+                            ? 0
+                            : card.total10
+                        ) | currency
+                    }}
                 </div>
             </li>
             <li class="d-flex justify-content-between">
