@@ -69,8 +69,12 @@
         </div>
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
-                <div *ngFor="let item of selectedProfile.cards">
-                    <app-card [card]="item"></app-card>
+                <div *ngFor="let item of selectedProfile.cards; index as i">
+                    <app-card
+                        [card]="item"
+                        (update)="saveProfiles()"
+                        (remove)="removeCard(selectedProfile.cards, i)"
+                    ></app-card>
                 </div>
                 <app-card-empty
                     (addCard)="addCard($event)"

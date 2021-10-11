@@ -34,7 +34,6 @@ export class CardModalComponent implements OnInit {
     modal: NgbModalRef | undefined = undefined;
     card: CardInterface = new CardEmpty();
 
-    subscription = new Subscription();
     examples: { [key: string]: string[] } = {
         bitcoin: [
             '3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5',
@@ -83,7 +82,6 @@ export class CardModalComponent implements OnInit {
         newCard.name = this.card.name;
 
         this.select.emit(newCard);
-
         this.modal?.close({
             address: this.card.address,
             blockchain: this.card.blockchain,

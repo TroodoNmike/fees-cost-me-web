@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
     CardEmpty,
     CardInterface,
@@ -15,6 +15,8 @@ import { AddressService } from '../services/address.service';
 })
 export class CardComponent implements OnInit {
     @Input() card: CardInterface = new CardEmpty();
+    @Output() update: EventEmitter<undefined> = new EventEmitter();
+    @Output() remove: EventEmitter<undefined> = new EventEmitter();
     openCard: EventEmitter<CardInterface> = new EventEmitter();
 
     page = 1;
@@ -68,7 +70,7 @@ export class CardComponent implements OnInit {
     }
 
     public removeCard() {
-        // this.card = undefined;
+        this.remove.emit();
     }
 
     refresh($event: MouseEvent) {
@@ -79,6 +81,7 @@ export class CardComponent implements OnInit {
     refreshCard(card: CardInterface) {
         this.card = card;
         this.getCardData(card);
+        this.update.emit();
     }
 
     openTransaction($event: MouseEvent, transaction: TransactionInterface) {

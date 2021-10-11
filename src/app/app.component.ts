@@ -3,6 +3,7 @@ import { CardInterface } from './interfaces/card.interface';
 import { ProfileInterface } from './interfaces/profile.interface';
 import { NgbModal, NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 import { defaultProfile } from './app.data';
+import { ProfileService } from './services/profile.service';
 
 @Component({
     selector: 'app-root',
@@ -14,13 +15,18 @@ export class AppComponent {
     profiles: ProfileInterface[] = [defaultProfile];
     selectedProfile: ProfileInterface = this.profiles[0];
 
-    constructor(private tooltipConfig: NgbTooltipConfig) {
-        this.addProfile();
+    constructor(
+        private tooltipConfig: NgbTooltipConfig,
+        private profileService: ProfileService
+    ) {
         tooltipConfig.tooltipClass = 'app-tooltip';
-        // let localCards = localStorage.getItem('cards');
-        // if (localCards) {
-        //     this.cards = JSON.parse(localCards);
-        // }
+
+        if (this.profileService.isDataSaved()) {
+            this.profiles = this.profileService.getProfiles();
+            this.selectedProfile = this.profileService.getSelectedProfile(
+                this.profiles
+            );
+        }
     }
 
     addProfile() {
@@ -33,19 +39,25 @@ export class AppComponent {
             cards: [],
         });
         this.selectedProfile = this.profiles[this.profiles.length - 1];
+
+        this.saveProfiles();
     }
 
     addCard(card: CardInterface) {
         this.selectedProfile.cards.push(card);
+        this.saveProfiles();
     }
 
     selectProfile(profile: ProfileInterface) {
         this.selectedProfile = profile;
+        this.profileService.saveProfiles(this.profiles, this.selectedProfile);
     }
 
     deleted($profile: ProfileInterface) {
         if (this.selectedProfile.cards.length > 0) {
-            const confirmMsg = confirm('Are you sure?');
+            const confirmMsg = confirm(
+                'This will remove your saved accounts in selected profile. Are you sure?'
+            );
 
             if (confirmMsg) {
                 this.deleteSelectedProfile();
@@ -53,6 +65,8 @@ export class AppComponent {
         } else {
             this.deleteSelectedProfile();
         }
+
+        this.saveProfiles();
     }
 
     editProfileOpen(profile: ProfileInterface) {
@@ -60,12 +74,13 @@ export class AppComponent {
         this.editProfile.emit(editCopy);
     }
 
-    saved($event: ProfileInterface) {
+    saved(profile: ProfileInterface) {
         const index = this.profiles.findIndex(
             (profile) => profile == this.selectedProfile
         );
-        this.profiles[index] = $event;
-        this.selectedProfile = $event;
+        this.profiles[index] = profile;
+        this.selectedProfile = profile;
+        this.saveProfiles();
     }
 
     private deleteSelectedProfile() {
@@ -75,5 +90,13 @@ export class AppComponent {
             );
             this.selectedProfile = this.profiles[0];
         }
+    }
+
+    saveProfiles() {
+        this.profileService.saveProfiles(this.profiles, this.selectedProfile);
+    }
+
+    removeCard(cards: CardInterface[], index: number) {
+        cards.splice(index, 1);
     }
 }
