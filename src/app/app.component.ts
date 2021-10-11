@@ -34,13 +34,19 @@ export class AppComponent {
             (profile) => profile.cards.length === 0
         );
 
-        this.profiles.push({
-            name: `Profile ${this.profiles.length}`,
-            cards: [],
-        });
-        this.selectedProfile = this.profiles[this.profiles.length - 1];
+        if (emptyProfiles.length > 1) {
+            alert(
+                `Please add at least one address to "${emptyProfiles[0].name}"`
+            );
+        } else {
+            this.profiles.push({
+                name: `Profile ${this.profiles.length}`,
+                cards: [],
+            });
+            this.selectedProfile = this.profiles[this.profiles.length - 1];
 
-        this.saveProfiles();
+            this.saveProfiles();
+        }
     }
 
     addCard(card: CardInterface) {
@@ -92,11 +98,12 @@ export class AppComponent {
         }
     }
 
-    saveProfiles() {
-        this.profileService.saveProfiles(this.profiles, this.selectedProfile);
-    }
-
     removeCard(cards: CardInterface[], index: number) {
         cards.splice(index, 1);
+        this.saveProfiles();
+    }
+
+    saveProfiles() {
+        this.profileService.saveProfiles(this.profiles, this.selectedProfile);
     }
 }
