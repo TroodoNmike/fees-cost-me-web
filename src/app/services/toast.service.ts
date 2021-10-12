@@ -8,6 +8,10 @@ export class ToastService {
         this.toasts.push({ textOrTpl, ...options });
     }
 
+    showDanger(textOrTpl: string) {
+        this.toasts.push({ textOrTpl, ...{ type: 'danger' } });
+    }
+
     remove(toast: any) {
         this.toasts = this.toasts.filter((t) => t !== toast);
     }

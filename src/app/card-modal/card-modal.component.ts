@@ -16,9 +16,10 @@ import {
 } from '../interfaces/card.interface';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { ToastService } from '../services/toast.service';
-import { Subscription } from 'rxjs';
+import * as Sentry from '@sentry/angular';
 
 declare var window: any;
+declare var gtag: any;
 
 @Component({
     selector: 'app-card-modal',
@@ -96,9 +97,13 @@ export class CardModalComponent implements OnInit {
                 const pubKey = resp.publicKey.toString();
                 this.editAndSelect(pubKey, 'solana', 'sol');
             } catch (exception) {
-                this.toastService.show('Could not connect', { type: 'danger' });
-                console.log(exception);
+                this.toastService.showDanger('Could not connect');
+                Sentry.captureException(exception);
             }
+        } else {
+            const message = 'Could not connect with Phantom';
+            this.toastService.showDanger(message);
+            gtag('event', 'Phantom', { installed: false });
         }
     }
 
@@ -128,41 +133,40 @@ export class CardModalComponent implements OnInit {
                     this.editAndSelect(accounts[0], 'ethereum', 'eth');
                 }
             } else {
-                this.toastService.show('Please install MetaMask', {
-                    type: 'danger',
-                });
+                this.toastService.showDanger('Please install MetaMask');
             }
+        } else {
+            const message = 'Could not connect with MetaMask';
+            this.toastService.showDanger(message);
+            gtag('event', 'Metamask', { installed: false });
         }
     }
 
     async liquality() {
-        try {
-            const bitcoin = await window.bitcoin.enable();
-            if (bitcoin) {
-                // const result = await window.bitcoin.request({
-                //     method: 'wallet_getAddresses',
-                //     params: [0, 10],
-                // });
-
-                this.editAndSelect(bitcoin[0]['address'], 'bitcoin', 'btc');
+        const isBitcoinEnabled = window.bitcoin;
+        if (isBitcoinEnabled) {
+            try {
+                const bitcoin = await window.bitcoin.enable();
+                if (bitcoin) {
+                    this.editAndSelect(bitcoin[0]['address'], 'bitcoin', 'btc');
+                }
+            } catch (exception) {
+                this.toastService.show('Could not connect', { type: 'danger' });
+                Sentry.captureException(exception);
             }
-        } catch (exception) {
+        } else {
             this.toastService.show('Could not connect', { type: 'danger' });
-            console.log(exception);
+            gtag('event', 'Bitcoin', { installed: false });
         }
     }
 
     async goLiquality() {
-        const what = await window.bitcoin.enable();
-        if (what) {
-            console.log(what);
-
+        const liquality = await window.bitcoin.enable();
+        if (liquality) {
             const result = await window.bitcoin.request({
                 method: 'wallet_getAddresses',
                 params: [0, 10],
             });
-            console.log(result);
-            console.log('anything?');
         }
     }
 
