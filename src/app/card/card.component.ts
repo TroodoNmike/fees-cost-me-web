@@ -139,11 +139,9 @@ export class CardComponent implements OnInit {
                             this.card.transactions.length / this.perPage
                         );
                     }
-
-                    // @todo to be removed
-                    // if (this.card && this.card.id === 0) {
-                    //     setTimeout(() => this.open());
-                    // }
+                } else {
+                    this.card.transactions = [];
+                    this.card.series = [];
                 }
             });
     }

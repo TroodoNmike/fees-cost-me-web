@@ -33,7 +33,7 @@
                     *ngIf="loading"
                 ></div>
                 <ngx-charts-line-chart
-                    *ngIf="!loading"
+                    *ngIf="!loading && card.series.length > 0"
                     [view]="view"
                     [gradient]="false"
                     [scheme]="colorScheme"
