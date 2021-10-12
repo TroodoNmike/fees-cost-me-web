@@ -1,4 +1,22 @@
+// Color system
+
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+$solana: #63f99f;
+
 $primary: #3f51b5;
+$primary-light-background: rgba($primary, 0.06);
+$footer-bg: rgba($primary, 0.06);
 
 $card-cap-bg: #3f51b5;
 $card-cap-color: white;

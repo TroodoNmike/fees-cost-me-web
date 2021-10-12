@@ -1,0 +1,26 @@
+@import "../../scss/variables";
+
+:host {
+    &.app-toast-container {
+        bottom: 0;
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        z-index: 2000; // needs to be above modal
+
+        .toast {
+            background-color: $white;
+            min-width: 400px;
+        }
+    }
+}
+.ngb-toasts {
+    top: unset;
+    right: unset;
+    bottom: 0;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}

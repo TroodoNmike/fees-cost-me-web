@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+    CardEmpty,
     CardInterface,
     TransactionInterface,
 } from '../interfaces/card.interface';
@@ -13,8 +14,14 @@ import { AddressService } from '../services/address.service';
     styleUrls: ['./card.component.scss'],
 })
 export class CardComponent implements OnInit {
-    @Input() card: CardInterface | undefined = undefined;
-    openCard: EventEmitter<CardInterface | undefined> = new EventEmitter();
+    @Input() card: CardInterface = new CardEmpty();
+    @Output() update: EventEmitter<undefined> = new EventEmitter();
+    @Output() remove: EventEmitter<undefined> = new EventEmitter();
+    openCard: EventEmitter<CardInterface> = new EventEmitter();
+
+    page = 1;
+    perPage = 10;
+    totalPages = 0;
 
     loading = true;
     message = '';
@@ -53,45 +60,91 @@ export class CardComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.card) {
-            this.addressService
-                .getTransactionsForCard(this.card)
-                .pipe(
-                    delay(500),
-                    finalize(() => (this.loading = false)),
-                    catchError((error) => {
-                        this.message = 'Could not load / find transactions';
-                        return of(undefined);
-                    })
-                )
-                .subscribe((card) => {
-                    this.card = card || undefined;
-                    // if (this.card && this.card.id === 0) {
-                    //     setTimeout(() => this.open());
-                    // }
-                });
+            this.getCardData(this.card);
         }
     }
 
     open() {
-        this.openCard.emit(this.card);
+        const copy = Object.assign({}, this.card);
+        this.openCard.emit(copy);
     }
 
     public removeCard() {
-        this.card = undefined;
+        this.remove.emit();
     }
 
     refresh($event: MouseEvent) {
+        this.getCardData(this.card, true);
         $event.stopPropagation();
     }
 
     refreshCard(card: CardInterface) {
-        this.addressService.getTransactionsForCard(card).subscribe((card) => {
-            this.card = card;
-        });
+        this.card = card;
+        this.getCardData(card);
+        this.update.emit();
     }
 
     openTransaction($event: MouseEvent, transaction: TransactionInterface) {
-        window.open('https://google.com', '_blank');
+        let destination = '';
+        if (this.card?.blockchain == 'bitcoin') {
+            destination = `https://www.blockchain.com/btc/tx/${transaction.id}`;
+        } else if (this.card?.blockchain == 'ethereum') {
+            destination = `https://etherscan.io/tx/${transaction.id}`;
+        } else if (this.card?.blockchain == 'solana') {
+            destination = `https://explorer.solana.com/tx/${transaction.id}`;
+        }
+
+        window.open(destination, '_blank');
         $event.stopPropagation();
+    }
+
+    nextPage($event: MouseEvent) {
+        ++this.page;
+        $event.stopPropagation();
+    }
+
+    getStart() {
+        return (this.page - 1) * this.perPage;
+    }
+
+    getEnd() {
+        return (this.page - 1) * this.perPage + this.perPage;
+    }
+
+    previousPage($event: MouseEvent) {
+        --this.page;
+        $event.stopPropagation();
+    }
+
+    private getCardData(card: CardInterface, refresh = false) {
+        this.page = 1;
+        this.totalPages = 0;
+        this.loading = true;
+
+        this.addressService
+            .getTransactionsForCard(card, refresh)
+            .pipe(
+                delay(500),
+                finalize(() => (this.loading = false)),
+                catchError((error) => {
+                    this.message = 'Could not load / find transactions';
+                    return of(undefined);
+                })
+            )
+            .subscribe((card) => {
+                if (card) {
+                    this.card = card;
+                    if (this.card) {
+                        this.totalPages = Math.ceil(
+                            this.card.transactions.length / this.perPage
+                        );
+                    }
+
+                    // @todo to be removed
+                    // if (this.card && this.card.id === 0) {
+                    //     setTimeout(() => this.open());
+                    // }
+                }
+            });
     }
 }

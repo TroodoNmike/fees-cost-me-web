@@ -1,9 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 import {
-    differenceInDays,
     differenceInHours,
-    formatDistanceToNowStrict,
+    differenceInMinutes,
+    formatDistanceStrict,
+    isAfter,
+    isValid,
     parseISO,
 } from 'date-fns';
 
@@ -11,36 +13,46 @@ import {
     name: 'ago',
 })
 export class AgoPipe implements PipeTransform {
-    transform(value: string, ...args: unknown[]): unknown {
+    transform(value: string, now = new Date()): string {
         const convertedToDate = parseISO(value);
 
-        const now = new Date();
-        const days = differenceInDays(now, convertedToDate);
+        if (!isValid(convertedToDate)) {
+            return '';
+        }
 
-        if (days <= 1) {
-            const hours = differenceInHours(now, convertedToDate, {
-                roundingMethod: 'floor',
-            });
+        if (isAfter(convertedToDate, now)) {
+            return '';
+        }
 
-            if (hours <= 1) {
-                return formatDistanceToNowStrict(convertedToDate, {
-                    unit: 'minute',
-                    addSuffix: false,
-                });
-            }
+        if (differenceInMinutes(now, convertedToDate) <= 1) {
+            return 'minute ago';
+        }
 
-            // add minutes here as well not just hours
-            return formatDistanceToNowStrict(convertedToDate, {
-                unit: 'hour',
-                addSuffix: false,
+        if (differenceInHours(now, convertedToDate) < 1) {
+            return formatDistanceStrict(convertedToDate, now, {
+                unit: 'minute',
+                addSuffix: true,
                 roundingMethod: 'floor',
             });
         }
 
-        return formatDistanceToNowStrict(convertedToDate, {
-            unit: 'day',
-            addSuffix: true,
-            roundingMethod: 'floor',
-        });
+        if (differenceInHours(now, convertedToDate) < 24) {
+            return formatDistanceStrict(convertedToDate, now, {
+                unit: 'hour',
+                addSuffix: true,
+                roundingMethod: 'round',
+            });
+        }
+
+        if (differenceInHours(now, convertedToDate) >= 24) {
+            return formatDistanceStrict(convertedToDate, now, {
+                unit: 'day',
+                addSuffix: true,
+                roundingMethod: 'round',
+            });
+        }
+
+        // @todo not sure how to test this
+        return 'unknown date';
     }
 }

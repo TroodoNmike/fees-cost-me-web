@@ -5,15 +5,20 @@ import {
     TransactionInterface,
 } from '../interfaces/card.interface';
 import { map } from 'rxjs/operators';
+import { format, parseISO } from 'date-fns';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AddressService {
     constructor(private client: HttpClient) {}
 
-    public getTransactionsForCard(card: CardInterface) {
+    public getTransactionsForCard(card: CardInterface, refresh = false) {
+        const host = environment.production ? '' : 'http://localhost:3000';
         return this.client
             .get<{ data: TransactionInterface[] }>(
-                `http://localhost:3000/blockchain/${card.blockchain}/${card.address}`
+                `${host}/blockchain/${card.blockchain}/${card.address}${
+                    refresh ? `?refresh=true` : ''
+                }`
             )
             .pipe(
                 map((data): CardInterface => {
@@ -58,7 +63,10 @@ export class AddressService {
         const items: { name: any; value: any }[] = [];
 
         data.forEach((item) => {
-            items.push({ name: item.date, value: item.feeValue });
+            items.push({
+                name: format(parseISO(item.date), 'Pp'),
+                value: item.feeValue,
+            });
         });
 
         return items;

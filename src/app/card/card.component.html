@@ -5,20 +5,16 @@
 >
     <div class="card-header py-3 d-flex justify-content-between">
         <div class="d-flex">
+            <div class="app-crypto-icon mr-2">
+                <img src="/assets/svg/white/{{ card.icon }}.svg" alt="btc" />
+            </div>
             <h4 class="my-0 fw-normal mr-2" *ngIf="!card.name">
                 {{ card.address | slice: 0:4 }}...{{ card.address | slice: -4 }}
             </h4>
             <h4 class="my-0 fw-normal mr-2" *ngIf="card.name">
                 {{ card.name }}
             </h4>
-            <div class="app-crypto-icon mr-2">
-                <img
-                    src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@master/svg/white/{{
-                        card.icon
-                    }}.svg"
-                    alt="btc"
-                />
-            </div>
+            <h4 class="my-0 fw-normal">{{ card.address | slice: 0:4 }}...</h4>
         </div>
         <div>
             <h4 class="my-0 fw-normal">
@@ -29,15 +25,15 @@
     <div class="card-body">
         <div class="d-flex justify-content-between">
             <div class="app-crypto-icon-box">
-                <img
-                    src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@master/svg/icon/{{
-                        card.icon
-                    }}.svg"
-                    alt="btc"
-                />
+                <img src="/assets/svg/icon/{{ card.icon }}.svg" alt="btc" />
             </div>
-            <div style="height: 60px">
+            <div class="app-chart d-flex justify-content-center">
+                <div
+                    class="spinner-border text-secondary"
+                    *ngIf="loading"
+                ></div>
                 <ngx-charts-line-chart
+                    *ngIf="!loading"
                     [view]="view"
                     [gradient]="false"
                     [scheme]="colorScheme"
@@ -103,7 +99,12 @@
                     }"
                 >
                     <!--                  // change it to sum of all transactions within last month or two-->
-                    {{ card.total10 | currency }}
+                    {{
+                        (card.total10 < 1 && card.total10 > 0
+                            ? 0
+                            : card.total10
+                        ) | currency
+                    }}
                 </div>
             </li>
             <li class="d-flex justify-content-between">
@@ -136,56 +137,63 @@
         <!--            Load more-->
         <!--        </button>-->
     </div>
-    <table class="table" [class.table-striped]="!loading">
-        <thead>
-            <tr>
-                <th class="text-center">Txn</th>
-                <th class="text-center">Date</th>
-                <th class="text-center">Fee</th>
-                <th class="text-center">Cost</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngIf="loading">
-                <td colspan="4" class="text-center">
-                    <div
-                        class="spinner-border text-secondary mt-4"
-                        role="status"
-                    >
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </td>
-            </tr>
-            <tr *ngIf="!loading && message">
-                <td colspan="4" class="text-center">
-                    {{ message }}
-                </td>
-            </tr>
-            <ng-container *ngIf="!loading">
-                <tr *ngFor="let transaction of card.transactions | slice: 0:10">
-                    <td
-                        class="text-center"
-                        (click)="openTransaction($event, transaction)"
-                        [title]="transaction.id"
-                    >
-                        <i class="bi bi-arrow-up-right-square"></i>
-                    </td>
-                    <td class="text-center">
-                        {{ transaction.date | ago }}
-                    </td>
-                    <td class="text-center" title="{{ transaction.fee }}">
-                        {{ transaction.fee | number: "1.6-6" }}
-                    </td>
-                    <td class="text-center">
-                        {{
-                            transaction.feeValue
-                                | currency: "USD":"symbol":"1.2-4"
-                        }}
+    <div>
+        <table class="table" [class.table-striped]="!loading">
+            <thead>
+                <tr>
+                    <th class="text-center">Txn</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Fee</th>
+                    <th class="text-center">Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="loading">
+                    <td colspan="4" class="text-center">
+                        <div
+                            class="spinner-border text-secondary mt-4"
+                            role="status"
+                        >
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     </td>
                 </tr>
-            </ng-container>
-        </tbody>
-    </table>
+                <tr *ngIf="!loading && message">
+                    <td colspan="4" class="text-center">
+                        {{ message }}
+                    </td>
+                </tr>
+                <ng-container *ngIf="!loading">
+                    <tr
+                        *ngFor="
+                            let transaction of card.transactions
+                                | slice: getStart():getEnd()
+                        "
+                    >
+                        <td
+                            class="text-center"
+                            (click)="openTransaction($event, transaction)"
+                            [title]="transaction.id"
+                        >
+                            <i class="bi bi-arrow-up-right-square"></i>
+                        </td>
+                        <td class="text-center">
+                            {{ transaction.date | ago }}
+                        </td>
+                        <td class="text-center" title="{{ transaction.fee }}">
+                            {{ transaction.fee | number: "1.6-6" }}
+                        </td>
+                        <td class="text-center">
+                            {{
+                                transaction.feeValue
+                                    | currency: "USD":"symbol":"1.2-4"
+                            }}
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
     <div class="card-body py-2">
         <nav>
             <ul class="pagination justify-content-center">
@@ -201,7 +209,20 @@
                 <!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
                 <!--                <li class="page-item"><a class="page-link" href="#">...</a></li>-->
                 <li class="page-item">
-                    <a class="page-link rounded-pill" href="#">Next Page</a>
+                    <a
+                        class="page-link rounded-pill mr-2"
+                        (click)="previousPage($event)"
+                        *ngIf="page > 1"
+                        >Previous Page</a
+                    >
+                </li>
+                <li class="page-item">
+                    <a
+                        class="page-link rounded-pill"
+                        (click)="nextPage($event)"
+                        *ngIf="this.page < totalPages"
+                        >Next Page</a
+                    >
                 </li>
             </ul>
         </nav>

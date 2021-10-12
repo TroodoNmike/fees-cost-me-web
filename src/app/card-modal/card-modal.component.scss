@@ -1,4 +1,21 @@
 /* keep */
+
+.btn-outline-primary:focus,
+.btn-outline-primary.focus {
+    box-shadow: 0 0 0 0.1rem rgb(63 81 181 / 25%);
+}
+
 .form-control:focus {
     box-shadow: 0 0 0 0.05rem rgb(63 81 181 / 25%);
+}
+
+.first-column {
+    width: 200px;
+}
+
+.app-table-modal {
+    &.table th,
+    &.table td {
+        padding: 0.5rem;
+    }
 }
