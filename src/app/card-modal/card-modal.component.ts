@@ -47,7 +47,7 @@ export class CardModalComponent implements OnInit {
             '0x9a1c3736778db80224ac7f56c9893804d8fa6bed',
         ],
         solana: [
-            'CuieVDEDtLo7FypA9SbLM9saXFdb1dsshEkyErMqkRQq', // many recent transactions, not sure if good example
+            '9qFV99WD5TKnpYw8w3xz3mgMBR5anoSZo2BynrGmNZqY',
             '3yFwqXBfZY4jBVUafQ1YEXw189y2dN3V5KQq9uzBDy1E', // top SOL address
             '8PjJTv657aeN9p5R2WoM6pPSz385chvTTytUWaEjSjkq',
         ],

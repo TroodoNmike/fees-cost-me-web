@@ -1,16 +1,16 @@
 @import "../../scss/variables";
 
 .card-crypto {
-    width: 350px;
+    width: 375px;
     h4 {
-        max-width: 200px;
+        max-width: 225px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 
     .card-body {
-        min-width: 200px;
+        min-width: 250px;
         padding: 1rem;
     }
     transition: border-left-color 0.2s ease-in-out, background-color 0.3s linear,

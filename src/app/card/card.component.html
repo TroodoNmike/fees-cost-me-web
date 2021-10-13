@@ -100,7 +100,7 @@
                     Potential savings
                     <i
                         class="bi bi-info-circle"
-                        ngbTooltip="Estimated savings from recent transactions if used Solana network instead"
+                        ngbTooltip="Estimated savings from recent transactions compared to using Solana network instead"
                     ></i>
                 </div>
                 <div
@@ -121,7 +121,7 @@
                     Highest transaction(s) cost
                     <i
                         class="bi bi-info-circle"
-                        ngbTooltip="Based on recent transactions"
+                        ngbTooltip="Based on recent transactions only"
                     ></i>
                 </div>
                 <div [class.text-danger]="card.highest > 1">
@@ -136,7 +136,7 @@
                         ngbTooltip="Based on recent transactions"
                     ></i>
                 </div>
-                <div ngbTooltip="Based on recent transactions not all">
+                <div ngbTooltip="Based on recent transactions only">
                     {{ card.lowest | currency }}
                 </div>
             </li>
