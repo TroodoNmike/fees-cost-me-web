@@ -123,6 +123,7 @@ export class CardComponent implements OnInit {
         this.page = 1;
         this.totalPages = 0;
         this.loading = true;
+        this.message = '';
 
         this.addressService
             .getTransactionsForCard(card, refresh)

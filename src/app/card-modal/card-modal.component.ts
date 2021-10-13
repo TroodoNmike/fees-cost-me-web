@@ -199,4 +199,12 @@ export class CardModalComponent implements OnInit {
         this.card.icon = icon;
         this.selectAddress();
     }
+
+    selectNetwork(
+        blockchain: AvailableBlockchains,
+        icon: AvailableCryptoIcons
+    ) {
+        this.card.blockchain = blockchain;
+        this.card.icon = icon;
+    }
 }

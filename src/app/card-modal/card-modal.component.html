@@ -435,7 +435,11 @@
                                 class="dropdown-menu"
                                 aria-labelledby="dropdownMenuButton"
                             >
-                                <a class="dropdown-item" href="#">
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    (click)="selectNetwork('bitcoin', 'btc')"
+                                >
                                     <span class="app-crypto-icon mr-2">
                                         <img
                                             src="/assets/svg/color/btc.svg"
@@ -444,7 +448,11 @@
                                     </span>
                                     Bitcoin Network
                                 </a>
-                                <a class="dropdown-item mr-3" href="#">
+                                <a
+                                    class="dropdown-item mr-3"
+                                    href="#"
+                                    (click)="selectNetwork('ethereum', 'eth')"
+                                >
                                     <span class="app-crypto-icon mr-2">
                                         <img
                                             src="/assets/svg/color/eth.svg"
@@ -453,7 +461,11 @@
                                     </span>
                                     Ethereum Network</a
                                 >
-                                <a class="dropdown-item" href="#">
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    (click)="selectNetwork('solana', 'sol')"
+                                >
                                     <span class="app-crypto-icon mr-2">
                                         <img
                                             src="/assets/svg/color/sol.svg"
