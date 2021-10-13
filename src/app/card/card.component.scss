@@ -34,7 +34,7 @@
     }
 
     .table tr:last-child td {
-        border-bottom: 1px solid $primary-hover-background; // @todo find source for this color
+        border-bottom: 1px solid $gray-300;
     }
 
     .app-button-refresh {

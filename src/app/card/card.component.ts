@@ -137,6 +137,9 @@ export class CardComponent implements OnInit {
             .subscribe((card) => {
                 if (card) {
                     this.card = card;
+                    if (this.card.transactions.length == 0) {
+                        this.message = 'Could not find transactions';
+                    }
                     if (this.card) {
                         this.totalPages = Math.ceil(
                             this.card.transactions.length / this.perPage

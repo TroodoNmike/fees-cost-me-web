@@ -143,7 +143,7 @@
         </ul>
     </div>
     <div>
-        <table class="table" [class.table-striped]="!loading">
+        <table class="table mb-0" [class.table-striped]="!loading">
             <thead>
                 <tr>
                     <th class="text-center">Txn</th>
@@ -156,7 +156,7 @@
                 <tr *ngIf="loading">
                     <td colspan="4" class="text-center">
                         <div
-                            class="spinner-border text-secondary mt-4"
+                            class="spinner-border text-secondary my-4"
                             role="status"
                         >
                             <span class="sr-only">Loading...</span>
@@ -201,7 +201,7 @@
     </div>
     <div class="card-body py-2">
         <nav>
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center mt-2">
                 <li class="page-item">
                     <a
                         class="page-link rounded-pill mr-2"
