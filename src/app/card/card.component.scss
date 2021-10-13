@@ -2,6 +2,7 @@
 
 .card-crypto {
     width: 375px;
+
     h4 {
         max-width: 225px;
         overflow: hidden;
@@ -13,14 +14,13 @@
         min-width: 250px;
         padding: 1rem;
     }
-    transition: border-left-color 0.2s ease-in-out, background-color 0.3s linear,
-        border-right-color 0.2s ease-in-out;
+    transition: $cardTransitionHover;
 
     &:hover {
         cursor: pointer;
-        border-color: rgba($primary, 05);
+        border-color: $primary-hover-border;
         .card-body {
-            background-color: rgba($primary, 0.02);
+            background-color: $primary-hover-background;
         }
     }
 
@@ -34,14 +34,22 @@
     }
 
     .table tr:last-child td {
-        border-bottom: 1px solid #dee2e6; // @todo find source for this color
+        border-bottom: 1px solid $primary-hover-background; // @todo find source for this color
     }
 
     .app-button-refresh {
-        border-color: rgba($primary, 0.1);
+        border-color: $primary-light;
     }
 
     .app-chart {
         height: 60px;
+    }
+}
+
+.app-crypto-icon-box {
+    width: 42px;
+    img {
+        width: 100%;
+        height: auto;
     }
 }

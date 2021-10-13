@@ -22,16 +22,12 @@ export class AddressService {
             )
             .pipe(
                 map((data): CardInterface => {
-                    let total1 = 0;
                     let total5 = 0;
                     let total10 = 0;
                     let highest = 0;
                     let lowest = 0;
 
                     data.data.forEach((item: TransactionInterface, index) => {
-                        if (index === 0) {
-                            total1 = item.feeValue;
-                        }
                         if (index < 5) {
                             total5 += item.feeValue;
                         }
@@ -55,7 +51,6 @@ export class AddressService {
                             total10 /
                             (data.data.length < 10 ? data.data.length : 10);
                     }
-                    card.total5 = total5;
                     card.total10 = total10;
                     card.highest = highest;
                     card.lowest = lowest;

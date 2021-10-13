@@ -15,8 +15,18 @@ $black: #000 !default;
 $solana: #63f99f;
 
 $primary: #3f51b5;
-$primary-light-background: rgba($primary, 0.06);
+$primary-light: rgba($primary, 0.1);
+
+$primary-hover-border: rgba($primary, 0.75);
+$primary-hover-background: rgba($primary, 0.02);
+
 $footer-bg: rgba($primary, 0.06);
 
-$card-cap-bg: #3f51b5;
+$box-shadow-focus: 0 0 0 0.05rem rgb(63 81 181 / 25%);
+
+$cardTransitionHover: border-left-color 0.2s ease-in-out,
+    background-color 0.3s linear, border-right-color 0.2s ease-in-out;
+
+// boostrap overwrite related
+$card-cap-bg: $primary;
 $card-cap-color: white;

@@ -1,0 +1,10 @@
+.app-tooltip {
+    &.show {
+        opacity: 1;
+    }
+    .tooltip-inner {
+        border: 1px solid $primary;
+        color: $primary;
+        background-color: $white;
+    }
+}

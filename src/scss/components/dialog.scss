@@ -1,0 +1,11 @@
+.app-dialog {
+    .modal-header {
+        border-bottom: 0 !important;
+        padding: $spacer $spacer * 2 !important;
+    }
+
+    .modal-footer {
+        border-top: 0 !important;
+        padding: $spacer $spacer * 2 !important;
+    }
+}

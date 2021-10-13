@@ -1,7 +1,7 @@
-import { Component, EventEmitter, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { CardInterface } from './interfaces/card.interface';
 import { ProfileInterface } from './interfaces/profile.interface';
-import { NgbModal, NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 import { defaultProfile } from './app.data';
 import { ProfileService } from './services/profile.service';
 

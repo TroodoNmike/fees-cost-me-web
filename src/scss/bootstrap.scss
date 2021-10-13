@@ -1,0 +1,36 @@
+@import "variables";
+
+// Bootstrap overwrites
+
+@media (min-width: 1200px) {
+    .container-xl,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 1500px !important;
+    }
+}
+
+.btn-outline-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+    color: darken($primary, 10%);
+    background-color: rgba($primary, 0.05);
+    border-color: rgba($primary, 0.75);
+}
+
+.btn-outline-primary:focus,
+.btn-outline-primary.focus {
+    box-shadow: $box-shadow-focus;
+}
+
+.form-control:focus {
+    box-shadow: $box-shadow-focus;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgb($primary, 0.05);
+}
