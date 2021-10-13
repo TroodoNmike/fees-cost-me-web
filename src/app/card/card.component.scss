@@ -2,9 +2,15 @@
 
 .card-crypto {
     width: 350px;
+    h4 {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
     .card-body {
-        min-width: 300px;
+        min-width: 200px;
         padding: 1rem;
     }
     transition: border-left-color 0.2s ease-in-out, background-color 0.3s linear,

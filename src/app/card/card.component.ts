@@ -79,7 +79,10 @@ export class CardComponent implements OnInit {
     }
 
     refreshCard(card: CardInterface) {
-        this.card = card;
+        this.card.address = card.address;
+        this.card.name = card.name;
+        this.card.blockchain = card.blockchain;
+        this.card.icon = card.icon;
         this.getCardData(card);
         this.update.emit();
     }

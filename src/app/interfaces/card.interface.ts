@@ -8,7 +8,8 @@ export interface CardInterface {
     series: any[];
     highest: number;
     lowest: number;
-    total1: number;
+    average5: number;
+    average10: number;
     total5: number;
     total10: number;
 }
@@ -33,7 +34,8 @@ export class CardEmpty implements CardInterface {
     series = [];
     highest = 0;
     lowest = 0;
-    total1 = 0;
+    average5 = 0;
+    average10 = 0;
     total5 = 0;
     total10 = 0;
 }

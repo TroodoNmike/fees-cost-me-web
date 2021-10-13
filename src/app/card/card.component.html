@@ -1,5 +1,5 @@
 <div
-    class="card card-crypto mb-4 rounded-3 shadow-sm mr-4"
+    class="card card-crypto mb-4 rounded-3 shadow-sm mx-4 mx-lg-3"
     *ngIf="card"
     (click)="open()"
 >
@@ -50,7 +50,6 @@
                     [yScaleMax]="card.highest"
                 >
                 </ngx-charts-line-chart>
-                <!--                    [results]="multi[card.id]"-->
             </div>
             <div>
                 <button
@@ -70,21 +69,32 @@
 
         <ul class="list-unstyled mb-2">
             <li class="d-flex justify-content-between">
-                <div>Average cost 5 last transactions</div>
-                <div>{{ card.total5 / 5 | currency }}</div>
+                <div>
+                    Average cost
+                    {{
+                        card.transactions.length < 5
+                            ? card.transactions.length
+                            : 5
+                    }}
+                    last transactions
+                </div>
+                <div>{{ card.average5 | currency }}</div>
             </li>
-            <li class="d-flex justify-content-between mb-3">
-                <div>Average cost 10 last transactions</div>
-                <div>{{ card.total10 / 10 | currency }}</div>
+            <li
+                class="d-flex justify-content-between mb-3"
+                *ngIf="card.transactions.length > 5"
+            >
+                <div>
+                    Average cost
+                    {{
+                        card.transactions.length < 10
+                            ? card.transactions.length
+                            : 10
+                    }}
+                    last transactions
+                </div>
+                <div>{{ card.average10 | currency }}</div>
             </li>
-            <!--            <li class="d-flex justify-content-between">-->
-            <!--                <div>Total cost for last 5 transactions</div>-->
-            <!--                <div>{{ card.total5 | currency }}</div>-->
-            <!--            </li>-->
-            <!--            <li class="d-flex justify-content-between mb-3">-->
-            <!--                <div>Total cost for last 10 transactions</div>-->
-            <!--                <div>{{ card.total10 | currency }}</div>-->
-            <!--            </li>-->
             <li class="d-flex justify-content-between mb-3">
                 <div>
                     Potential savings
@@ -98,7 +108,6 @@
                         'text-success font-weight-bold': card.total10 > 1
                     }"
                 >
-                    <!--                  // change it to sum of all transactions within last month or two-->
                     {{
                         (card.total10 < 1 && card.total10 > 0
                             ? 0
@@ -132,10 +141,6 @@
                 </div>
             </li>
         </ul>
-
-        <!--        <button type="button" class="w-100 btn btn-lg btn-outline-primary">-->
-        <!--            Load more-->
-        <!--        </button>-->
     </div>
     <div>
         <table class="table" [class.table-striped]="!loading">
@@ -197,17 +202,6 @@
     <div class="card-body py-2">
         <nav>
             <ul class="pagination justify-content-center">
-                <!--                <li class="page-item disabled">-->
-                <!--                    <a-->
-                <!--                        class="page-link"-->
-                <!--                        href="#"-->
-                <!--                        tabindex="-1"-->
-                <!--                        aria-disabled="true"-->
-                <!--                        >Previous</a-->
-                <!--                    >-->
-                <!--                </li>-->
-                <!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-                <!--                <li class="page-item"><a class="page-link" href="#">...</a></li>-->
                 <li class="page-item">
                     <a
                         class="page-link rounded-pill mr-2"

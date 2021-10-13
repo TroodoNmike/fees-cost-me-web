@@ -1,7 +1,16 @@
 <div class="d-flex flex-column justify-content-between min-vh-100">
     <div class="container pt-4">
         <div class="row">
-            <div class="col-12 d-flex mb-3 justify-content-center">
+            <div
+                class="
+                    col-12
+                    d-flex
+                    mb-3
+                    justify-content-center
+                    text-nowrap
+                    overflow-auto
+                "
+            >
                 <button
                     type="button"
                     class="
@@ -68,7 +77,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 d-flex justify-content-center">
+            <div class="col-12 d-flex justify-content-center flex-wrap">
                 <div *ngFor="let item of selectedProfile.cards; index as i">
                     <app-card
                         [card]="item"

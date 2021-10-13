@@ -510,6 +510,15 @@
                 Edit {{ card.address | addressShort }}
             </button>
             <button
+                *ngIf="isNew()"
+                type="button"
+                class="btn btn-outline-primary rounded-pill"
+                (click)="editMode = true"
+            >
+                <i class="bi bi-pencil mr-1"></i>
+                Enter address manually
+            </button>
+            <button
                 type="button"
                 class="btn btn-outline-primary rounded-pill ml-2"
                 (click)="modal.close()"

@@ -47,7 +47,14 @@ export class AddressService {
                         }
                     });
 
-                    card.total1 = total1;
+                    if (data.data.length > 0) {
+                        card.average5 =
+                            total5 /
+                            (data.data.length < 5 ? data.data.length : 5);
+                        card.average10 =
+                            total10 /
+                            (data.data.length < 10 ? data.data.length : 10);
+                    }
                     card.total5 = total5;
                     card.total10 = total10;
                     card.highest = highest;
