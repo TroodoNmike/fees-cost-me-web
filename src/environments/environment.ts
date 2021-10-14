@@ -2,8 +2,14 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
-  production: false
+import { EnvironmentInterface } from '../app/interfaces/environment.interface';
+
+export const environment: EnvironmentInterface = {
+    production: false,
+    gTag: 'G-06TQW1X0QH',
+    sentryDsn:
+        'https://6ce3b6f3fe0b46c5bf927ccfca9e4740@o1033932.ingest.sentry.io/6000573',
+    apiHost: 'http://localhost:3000',
 };
 
 /*

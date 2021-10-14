@@ -5,6 +5,7 @@
     "dev": "ng serve",
     "start": "ng serve",
     "build": "ng build",
+    "build-prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -29,6 +30,7 @@
     "cryptocurrency-icons": "^0.18.0",
     "date-fns": "^2.24.0",
     "ngx-clipboard": "^14.0.1",
+    "ngx-google-analytics": "^11.2.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

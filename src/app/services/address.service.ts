@@ -13,12 +13,11 @@ export class AddressService {
     constructor(private client: HttpClient) {}
 
     public getTransactionsForCard(card: CardInterface, refresh = false) {
-        const host = environment.production ? '' : 'http://localhost:3000';
         return this.client
             .get<{ data: TransactionInterface[] }>(
-                `${host}/blockchain/${card.blockchain}/${card.address}${
-                    refresh ? `?refresh=true` : ''
-                }`
+                `${environment.apiHost}/blockchain/${card.blockchain}/${
+                    card.address
+                }${refresh ? `?refresh=true` : ''}`
             )
             .pipe(
                 map((data): CardInterface => {

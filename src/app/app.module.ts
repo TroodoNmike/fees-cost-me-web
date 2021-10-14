@@ -28,6 +28,8 @@ import { ProfileEditComponent } from './profile/profile-edit.component';
 import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 import * as Sentry from '@sentry/angular';
+import { environment } from '../environments/environment';
+import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 
 @NgModule({
     declarations: [
@@ -54,6 +56,7 @@ import * as Sentry from '@sentry/angular';
         ClipboardModule,
         NgbPopoverModule,
         NgbToastModule,
+        NgxGoogleAnalyticsModule.forRoot(environment.gTag),
     ],
     providers: [
         AddressService,

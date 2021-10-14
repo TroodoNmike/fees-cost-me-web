@@ -10,7 +10,7 @@ if (environment.production) {
     enableProdMode();
 }
 Sentry.init({
-    dsn: 'https://6ce3b6f3fe0b46c5bf927ccfca9e4740@o1033932.ingest.sentry.io/6000573',
+    dsn: environment.sentryDsn,
     integrations: [
         new Integrations.BrowserTracing({
             // @todo add correct origin
